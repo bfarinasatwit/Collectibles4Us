@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  php-apache:
+    ports:
+      - "80:80"
+    build: './build/php'
+    volumes:
+      - ./app:/var/www/html
+  xampp:
+        container_name: myXampp
+        ports:
+            - '41061:22'
+            - '41062:80'
+        volumes:
+            - '~/my_web_pages:/www'
+        image: 'tomsik68/xampp:8'
+volumes:
+  app:
+  dbData:
