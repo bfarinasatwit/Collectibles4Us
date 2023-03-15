@@ -2,15 +2,17 @@
 // database connection code
 // $con = mysqli_connect('localhost', 'database_user', 'database_password','database');
 
-$con = mysqli_connect('localhost', 'root', '','collectors_test');
+$con = mysqli_connect('db', 'root', 'password','Collectbiles4US');
 
 // get the post records
-$txtName = $_POST['txtName'];
-$txtEmail = $_POST['txtEmail'];
-$txtPsswd = $_POST['txtPsswd'];
 
+$txtFirstName = $_POST['firstname'];
+$txtLastName = $_POST['lastname'];
+$txtEmail = $_POST['email'];
+$txtPsswd = $_POST['password'];
+$hashedPsswd = password_hash($txtPsswd, PASSWORD_DEFAULT);
 // database insert SQL code
-$sql = "INSERT INTO `users` (`userID`, `Username`, `Email`, `Password`) VALUES (NULL, '$txtName', '$txtEmail', '$txtPsswd')";
+$sql = "INSERT INTO `users` ( `firstName`, `lastName`, `email`, `user_pass`) VALUES ('$txtFirstName', '$txtLastName','$txtEmail', '$hashedPsswd')";
 
 // insert in database 
 $rs = mysqli_query($con, $sql);
