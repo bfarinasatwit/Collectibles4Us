@@ -1,4 +1,4 @@
---users table creationg
+
 CREATE TABLE users(
     user_id int NOT NULL AUTO_INCREMENT,
     firstName varchar(255) NOT NULL,
@@ -7,11 +7,11 @@ CREATE TABLE users(
     email varchar(255) NOT NULL,
     PRIMARY KEY (user_id)
 );
---inserting two tester users into users
+
 INSERT INTO users (firstName, lastName, user_pass, email)
 values ('Brodi', 'Farinas', 'superpass', 'random@me.com'), ('Soup', 'Campbell', 'secretpass', 'campbellsoup@me.com');
 
---Collections table creation
+
 CREATE TABLE collections(
     collection_id int NOT NULL AUTO_INCREMENT,
     collection_name varchar(255) NOT NULL,
@@ -21,11 +21,10 @@ CREATE TABLE collections(
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
---inserting two tester collections into collections
+
 INSERT INTO collections (collection_name, collect_type, user_id)
 values ('Baseball!', 'Sports', 1), ('Basketball!', 'Sports', 1), ('Sports!', 'Sports', 2);
 
---collectibles table creation
 CREATE TABLE collectibles(
     collectible_id int NOT NULL AUTO_INCREMENT,
     collectible_name varchar(255) NOT NULL,
@@ -38,6 +37,6 @@ CREATE TABLE collectibles(
     FOREIGN KEY (collection_id) REFERENCES collections(collection_id)
 );
 
---inserting collectibles into collectibles 
+
 INSERT INTO collectibles (collectible_name, year_created, manufacturer, c_condition, collection_id)
 values('Anthony Volpe Bowman 1st', 2021, 'Topps', 9, 1),('Jayson Tatum Rookie', 2017, 'Panini', 9, 3),('Gleyber Torres Autograph', 2017, 'Topps', 9, 1) ;
