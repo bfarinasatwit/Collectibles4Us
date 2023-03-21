@@ -19,8 +19,9 @@ var_dump($GLOBALS);
 $check = mysqli_fetch_array($result);
 //if match send okay to controller to build view
 if (isset($check)) {
-    //just a tester remove when building webpage
-    echo 'Sucess!';
+    //simple script to load and send user to model.php
+    echo "<script> location.href='model.php'; </script>";
+    die();
 }
 //else say incorrect email and password
 else {
