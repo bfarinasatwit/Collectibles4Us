@@ -1,0 +1,12 @@
+.my-login-form {
+    max-width: 40vw;
+    margin: auto;
+}
+body{
+    height: 100vh;
+    padding-top: 25%;
+}
+img{
+    margin-bottom: 25px;
+    width: 150px;
+}

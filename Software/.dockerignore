@@ -1,0 +1,5 @@
+# docker doesn't look here
+
+node-modules
+.gitignore
+.git

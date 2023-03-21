@@ -1,0 +1,13 @@
+# Node.js modules
+node_modules
+
+# Editor directories
+.vscode
+.idea
+*.sublime-*
+
+# Build artifacts
+*.log
+*.bak
+*.swp
+.DS_Store

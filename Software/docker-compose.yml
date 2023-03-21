@@ -1,0 +1,66 @@
+version: "3.9"
+services:
+  # apache server
+  php-apache:
+    ports:
+      - "3300:80"
+    build: './php'
+    depends_on:
+      - db
+    volumes:
+      - './php:/var/www/html'
+    networks:
+      - prod-node-apache
+      - apache-mysql
+  # Database
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - apache-mysql
+      - myadmin
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: Collectibles4US
+      MYSQL_PASSWORD: password
+
+  # frontend nodejs server to have react
+  node:
+    depends_on:
+      - php-apache
+    build:
+      context: './node'
+      dockerfile: Dockerfile.production
+    ports:
+      - "80:80"
+    command: [ "nginx", "-g", "daemon off;" ]
+    networks:
+      - prod-node-apache
+
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8090:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - myadmin
+
+networks:
+  prod-node-apache:
+  apache-mysql:
+  myadmin:
+
+volumes:
+  db_data:
+  app:
