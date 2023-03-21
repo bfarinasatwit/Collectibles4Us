@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
     CloseButton as BootClose,
     Form as BootForm,
@@ -6,8 +7,9 @@ import {
     Modal as BootModal
 } from 'react-bootstrap'
 
-const NewUserForm = (props) => {
 
+const NewUserForm = (props) => {
+    const nav = useNavigate()
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -28,7 +30,11 @@ const NewUserForm = (props) => {
                 })
             }
         ).then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {console.log(data);
+            if(!data.error){
+                nav("/home", { state: data[0]})
+            }
+            })
             .catch(error => console.error(error))
     }
 
