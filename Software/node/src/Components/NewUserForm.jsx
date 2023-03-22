@@ -34,6 +34,8 @@ const NewUserForm = (props) => {
             .then(data => {console.log(data);
             if(!data.error){
                 nav("/home", { state: data[0]})
+            }else {
+                setUsedEmail("The email entered has already been used.")
             }
             })
             .catch(error => console.error(error))
@@ -57,6 +59,8 @@ const NewUserForm = (props) => {
                 </BootForm.Label>
 
                 <BootForm.Control required placeholder="Enter last name" onChange={(event) => setLastName(event.target.value)} />
+
+                <div style={{color: 'red'}}>{usedEmail}</div>
 
                 <BootForm.Label className="form-control" style={{ "marginTop": "2rem" }}>
                     Email Address
