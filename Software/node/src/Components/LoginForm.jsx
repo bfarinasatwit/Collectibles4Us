@@ -12,6 +12,7 @@ const LoginForm = () => {
     const nav = useNavigate()
     const [email, setEmail] = useState('')
     const [passwd, setPasswd] = useState('')
+    const [incorrectPasswd, setIncorrectPasswd]=useState('')
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -30,6 +31,8 @@ const LoginForm = () => {
             .then(data => {console.log(data);
                    if (!data.error) {
                     nav("/home", { state: data[0]})
+                   }else {
+                    setIncorrectPasswd("The login entered is not valid.")
                    }}) 
             .catch(error => console.error(error))
     }
@@ -38,6 +41,7 @@ const LoginForm = () => {
         <>
             <BootForm className="my-login-form" onSubmit={handleSubmit}>
                 <BootImage rounded src={card} ></BootImage>
+                <div>{incorrectPasswd}</div>
                 <BootForm.Label className="form-control" >
                     Email Address
                 </BootForm.Label>
