@@ -14,6 +14,7 @@ const NewUserForm = (props) => {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [passwd, setPasswd] = useState('')
+    const [usedEmail, setUsedEmail] = useState('')
 
     const handleCreate = (event) => {
         event.preventDefault()

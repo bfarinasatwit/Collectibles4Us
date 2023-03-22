@@ -12,7 +12,7 @@ const LoginForm = () => {
     const nav = useNavigate()
     const [email, setEmail] = useState('')
     const [passwd, setPasswd] = useState('')
-    const [incorrectPasswd, setIncorrectPasswd]=useState('')
+    const [incorrectPasswd, setIncorrectPasswd] = useState('')
     
 
     const handleSubmit = (event) => {
@@ -42,7 +42,7 @@ const LoginForm = () => {
         <>
             <BootForm className="my-login-form" onSubmit={handleSubmit}>
                 <BootImage rounded src={card} ></BootImage>
-                <div>{incorrectPasswd}</div>
+                <div style={{color: 'red'}}>{incorrectPasswd}</div>
                 <BootForm.Label className="form-control" >
                     Email Address
                 </BootForm.Label>
