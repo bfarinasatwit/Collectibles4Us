@@ -2,9 +2,12 @@
     max-width: 40vw;
     margin: auto;
 }
+.incorrect-password {
+    border: 1px solid red;
+}
 body{
     height: 100vh;
-    padding-top: 25%;
+    padding-top: 150px;
 }
 img{
     margin-bottom: 25px;

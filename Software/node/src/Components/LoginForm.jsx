@@ -4,7 +4,8 @@ import '../Styles/LoginForm.css'
 import {
     Form as BootForm,
     Button as BootButton,
-    Image as BootImage
+    Image as BootImage,
+    Alert as BootAlert
 } from 'react-bootstrap'
 import card from "../pictures/card.avif"
 
@@ -12,8 +13,7 @@ const LoginForm = () => {
     const nav = useNavigate()
     const [email, setEmail] = useState('')
     const [passwd, setPasswd] = useState('')
-    const [incorrectPasswd, setIncorrectPasswd]=useState('')
-    
+    const [invalidLogin, setInvalidLogin] = useState(false)
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -29,12 +29,17 @@ const LoginForm = () => {
                 })
             }
         ).then(response => response.json())
-            .then(data => {console.log(data);
-                   if (!data.error) {
-                    nav("/home", { state: data[0]})
-                   }else {
-                    setIncorrectPasswd("The login entered is not valid.")
-                   }}) 
+            .then(data => {
+                console.log(data);
+                if (!data.error) {
+                    nav("/home", { state: data[0] })
+                } else {
+                    if(invalidLogin) {
+                        setInvalidLogin(false)
+                    }
+                    setInvalidLogin(true)
+                }
+            })
             .catch(error => console.error(error))
     }
 
@@ -42,7 +47,13 @@ const LoginForm = () => {
         <>
             <BootForm className="my-login-form" onSubmit={handleSubmit}>
                 <BootImage rounded src={card} ></BootImage>
-                <div>{incorrectPasswd}</div>
+
+                {invalidLogin &&
+                    <BootAlert dismissible variant='danger' onClose={() => setInvalidLogin(false)}>
+                        Invalid Login
+                    </BootAlert>
+                }
+
                 <BootForm.Label className="form-control" >
                     Email Address
                 </BootForm.Label>
