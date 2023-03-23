@@ -15,14 +15,14 @@ values ('Brodi', 'Farinas', (SHA2(CONCAT('superpass'), 256)), 'random@me.com'),
 CREATE TABLE albums(
     album_id int NOT NULL AUTO_INCREMENT,
     album_name varchar(255) NOT NULL,
-    alubum_thumbnail varchar(255) NOT NULL,
+    album_thumbnail varchar(255) NOT NULL,
     collect_type varchar(255) NOT NULL,
     PRIMARY KEY (album_id),
     user_id int NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
-INSERT INTO albums (album_name, collect_type, user_id, alubum_thumbnail)
+INSERT INTO albums (album_name, collect_type, user_id, album_thumbnail)
 values ('Baseball!', 'Sports', 1, 'baseball.jpg'), ('Basketball!', 'Sports', 1,'basketball.jpg'), ('Sports!', 'Sports', 2,'sports.jpg');
 
 CREATE TABLE collectibles(
