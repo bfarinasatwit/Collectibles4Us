@@ -28,7 +28,7 @@ const CarouselComponent = (props) =>{
         
         <div>
             
-            {(data[0].alubum_thumbnail)}
+            {JSON.stringify(data)}
             
         </div>
     )
