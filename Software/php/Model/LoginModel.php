@@ -11,7 +11,7 @@ class LoginModel extends Database
     public function newUser($firstName, $lastName, $email, $passwd)
     {
         // inserts then
-        $this->insert("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?)", ["sssss", $firstName, $lastName, hash('sha256', $passwd), $passwd, $email]);
+        $this->insert("INSERT INTO users VALUES (NULL, ?, ?, ?, ?)", ["ssss", $firstName, $lastName, hash('sha256', $passwd), $email]);
         // returns their info. This may be a little inefficient when you could just not query sql
         return $this->select("SELECT * FROM users WHERE email = ? AND user_pass = ?", ["ss", $email, hash('sha256', $passwd)]);
     }

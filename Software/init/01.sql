@@ -3,14 +3,13 @@ CREATE TABLE users(
     firstName varchar(255) NOT NULL,
     lastName varchar(255) NOT NULL,
     user_pass varchar(256) NOT NULL,
-    unhashed_pass varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     PRIMARY KEY (user_id)
 );
 
-INSERT INTO users (firstName, lastName, user_pass, unhashed_pass, email)
-values ('Brodi', 'Farinas', (SHA2(CONCAT('superpass'), 256)), 'superpass', 'random@me.com'), 
-       ('Soup', 'Campbell', (SHA2(CONCAT('secretpass'), 256)), 'secretpass', 'campbellsoup@me.com');
+INSERT INTO users (firstName, lastName, user_pass, email)
+values ('Brodi', 'Farinas', (SHA2(CONCAT('superpass'), 256)), 'random@me.com'), 
+       ('Soup', 'Campbell', (SHA2(CONCAT('secretpass'), 256)), 'campbellsoup@me.com');
 
 
 CREATE TABLE albums(
@@ -19,6 +18,7 @@ CREATE TABLE albums(
     collect_type varchar(255) NOT NULL,
     PRIMARY KEY (album_id),
     user_id int NOT NULL,
+
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 INSERT INTO albums (album_name, collect_type, user_id)
