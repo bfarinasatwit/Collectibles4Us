@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import  Carousel  from "react-multi-carousel";
+import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import '../Styles/carousel.css'
 import Card from 'react-bootstrap/Card'
+import AddCard from './AddCard'
 
 
 
@@ -49,6 +50,11 @@ const CarouselComponent = (props) => {
         }
     };
 
+
+    //add collection modal
+    const handleShowModal = () =>{
+
+    }
     return (
 
         <div>
@@ -60,52 +66,52 @@ const CarouselComponent = (props) => {
                 infinite={true} //wraps around
                 keyBoardControl={true}
                 customTransition="all .5"
+                focusOnSelect={true}
                 transitionDuration={500}
-                partialVisible //shows partial visible items in the carousel
+                partialVisible={true} //shows partial visible items in the carousel
                 containerClass="carousel-container"
-                dotListClass="custom-dot-list-style"
                 itemClass="carousel-item-padding-40-px"
             >
                 {/**Logging data for TS */}
                 {console.log(data)}
-                
+
                 {/**Mapping data*/}
-                {data.map(album =>{
-                    {/**Creation of each div happens here*/}
-                    return <Card 
-                        style = {{
-                            width: "95%", 
+                {data.map(album => {
+                    {/**Creation of each div happens here*/ }
+                    return <Card
+                        className='shadow'
+                        style={{
+                            width: "308px",
                             height: "400px",
                             margin: "20px"
-                            
+
                         }}
                     >
-                        
+
                         {/**Not important just used for TS */}
                         {console.log(album.album_name)}
                         {/**Image for each div, require is needed to "import" the file */}
                         <Card.Img
-                         src = {require("../../../media/"+album.album_thumbnail)}
-                         style = {{
-                            height: "50%",
-                            objectFit: "cover",
-                            objectPosition: "center"
-                        }}
-                         />
+                            src={require("../media/" + album.album_thumbnail)}
+                            style={{
+                                height: "75%",
+                                objectFit: "cover",
+                                objectPosition: "center"
+                            }}
+                        />
                         <Card.Title>{album.album_name}</Card.Title>
                         <Card.Body className='type'>{album.collect_type}</Card.Body>
                     </Card>
-                
+
                 })}
-                
+
                 {/**I want to create a div that goes into the carousel to add collections
                  * My ides is to sort of have three collections on the screen at all times 
                  * if there is less than three fill in the rest with dummy templates that 
                  * you can click on to create a new collection
                 */}
-                <div>
                 
-                </div>
+                <AddCard showModal={handleShowModal}/>
             </Carousel>
 
         </div>
