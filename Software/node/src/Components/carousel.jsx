@@ -4,12 +4,20 @@ import "react-multi-carousel/lib/styles.css";
 import '../Styles/carousel.css'
 import Card from 'react-bootstrap/Card'
 import AddCard from './AddCard'
+import {Modal} from 'react-bootstrap'
 
 
 
 
 const CarouselComponent = (props) => {
 
+    const [showModal, setShowModal] = useState(false);
+    const handleShowModal = () => {
+        setShowModal(true);
+    }
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
     //logs the id number in the console for troubleshooting
     { console.log(props.id) }
     //empty array for data to be filled with 
@@ -51,10 +59,7 @@ const CarouselComponent = (props) => {
     };
 
 
-    //add collection modal
-    const handleShowModal = () =>{
 
-    }
     return (
 
         <div>
@@ -109,11 +114,25 @@ const CarouselComponent = (props) => {
                  * My ides is to sort of have three collections on the screen at all times 
                  * if there is less than three fill in the rest with dummy templates that 
                  * you can click on to create a new collection
+                 * 
+                 * Edit: Changed it to a different component so it would be easier to show the modal
                 */}
-                
-                <AddCard showModal={handleShowModal}/>
-            </Carousel>
 
+                <AddCard className="add-card"onClick={handleShowModal} />
+                
+            </Carousel>
+            <Modal show={showModal} onHide={handleCloseModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add New Collection</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {/* your form code here */}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button onClick={handleCloseModal}>Cancel</button>
+                        <button>Add Collection</button>
+                    </Modal.Footer>
+                </Modal>
         </div>
     )
 }

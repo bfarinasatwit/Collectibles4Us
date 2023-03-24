@@ -1,11 +1,11 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 
-const AddCard = ({ showModal }) => {
+const AddCard = ({ onClick }) => {
     return (
         <Card
             className="shadow"
-            onClick={showModal}
+            onClick={onClick}
             style={{
                 cursor: 'pointer',
                 width: "308px",
