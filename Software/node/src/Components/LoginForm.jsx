@@ -15,10 +15,10 @@ const LoginForm = () => {
     const [passwd, setPasswd] = useState('')
     const [invalidLogin, setInvalidLogin] = useState(false)
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
 
-        fetch("http://localhost:3300/index.php/login/login",
+        const response = await fetch("http://localhost:3300/index.php/login/login",
             {
                 method: 'POST',
                 mode: 'cors',
@@ -28,19 +28,15 @@ const LoginForm = () => {
                     passwd: passwd
                 })
             }
-        ).then(response => response.json())
-            .then(data => {
-                console.log(data);
-                if (!data.error) {
-                    nav("/home", { state: data[0] })
-                } else {
-                    if(invalidLogin) {
-                        setInvalidLogin(false)
-                    }
-                    setInvalidLogin(true)
-                }
-            })
-            .catch(error => console.error(error))
+        )
+
+        const data = await response.json()
+
+        if (data) {
+            nav("/home", { state: data[0] })
+        } else {
+            setInvalidLogin(true)
+        }
     }
 
     return (
