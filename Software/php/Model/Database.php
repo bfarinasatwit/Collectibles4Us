@@ -1,8 +1,10 @@
 <?php
 class Database
 {
+    // this variable is the connection to mysql
     protected $connection = null;
 
+    // constructor
     public function __construct($host = DB_HOST)
     {
         try {
@@ -16,6 +18,12 @@ class Database
         }
     }
 
+    /**
+     * This function calls executestatement with the query
+     * takes the result and returns it.
+     * 
+     * This is meant to be for insert queries
+     */
     public function insert($query = "", $params = [])
     {
         try {
@@ -28,6 +36,13 @@ class Database
         }
     }
 
+    /**
+     * This function calls executestatement with the query
+     * takes the result and returns it.
+     * 
+     * This is meant to be for select queries. They are currently the
+     * same, but may change to be different in the future
+     */
     public function select($query = "", $params = [])
     {
         try {
@@ -40,6 +55,11 @@ class Database
         }
     }
 
+    /**
+     * This function uses the prepare and bind_param functions for mysqli
+     * This ensures no code can be injected, rather than just using 
+     * mysqli.query("string")
+     */
     public function executeStatement($query, $params = [])
     {
         try {
@@ -50,12 +70,13 @@ class Database
             }
 
             if ($params) {
+                // the slice of all of the array params including index 1 and higher
                 $args = array_slice($params, 1);
                 $stmt->bind_param($params[0], ...$args);
             }
 
+            // executes and then returns the result.
             $stmt->execute();
-
             return $stmt;
 
         } catch (Exception $e) {

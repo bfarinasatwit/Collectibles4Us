@@ -36,28 +36,41 @@
             // brings query string params into an array
             $arrQueryStringParams = $this->getQueryStringParams();
 
+            // on the method being GET
             if (strtoupper($requestMethod) == 'GET') {
                 try {
+                    // initializes the db extension homemodel 
+                    // which connects to mysql on initialization
                     $getProfileModel = new HomeModel();
 
+                    // default value
                     $id = -1;
 
+                    // if the query possesses a user_id value
                     if(isset($arrQueryStringParams['user_id'])) {
                        $id = $arrQueryStringParams['user_id'];
                     }
 
+                    // if not
                     if($id == -1) {
-                        throw new Exception("Invalid user id provided.\n");
+                        throw new Exception("No user id provided.\n");
                     }
 
-                    $response_data = json_encode($this->formProfile($getProfileModel->getAlbums($id), 
-                                                                   $getProfileModel->getCollectibles($id)));
+                    // these calls grab the albums and collcetibles associated
+                    // with the user id
+                    $albums = $getProfileModel->getAlbums($id);
+                    $collectibles = $getProfileModel->getCollectibles($id);
+                    // this will turn it into the required array of all albums
+                    // with each collectible in each album assigned to its album
+                    $response_data = json_encode($this->formProfile($albums, $collectibles));
 
                 } catch (Exception $e) {
+                    // any caught exceptions will still be formatted to be send to an endpoint
+                    // this is WIP and we need to encompass more errors. Ex. Database connection error
                     $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
                     $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
                 }
-            } else { // wrong method
+            } else { // wrong method, not GET
                 $strErrorDesc = 'Method not supported';
                 $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
             }
