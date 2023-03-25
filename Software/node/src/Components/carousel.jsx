@@ -71,7 +71,7 @@ const CarouselComponent = (props) => {
                 infinite={true} //wraps around
                 keyBoardControl={true}
                 customTransition="all .5"
-                focusOnSelect={true}
+                focusOnSelect={false}
                 transitionDuration={500}
                 partialVisible={true} //shows partial visible items in the carousel
                 containerClass="carousel-container"
@@ -118,7 +118,7 @@ const CarouselComponent = (props) => {
                  * Edit: Changed it to a different component so it would be easier to show the modal
                 */}
 
-                <AddCard className="add-card"onClick={handleShowModal} />
+                <AddCard className="add-card" onClick={handleShowModal} />
                 
             </Carousel>
             <Modal show={showModal} onHide={handleCloseModal}>
