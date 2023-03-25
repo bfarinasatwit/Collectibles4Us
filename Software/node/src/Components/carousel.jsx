@@ -4,7 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import '../Styles/carousel.css'
 import Card from 'react-bootstrap/Card'
 import AddCard from './AddCard'
-import {Modal} from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 
 
 
@@ -119,20 +119,20 @@ const CarouselComponent = (props) => {
                 */}
 
                 <AddCard className="add-card" onClick={handleShowModal} />
-                
+
             </Carousel>
             <Modal show={showModal} onHide={handleCloseModal}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add New Collection</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        {/* your form code here */}
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <button onClick={handleCloseModal}>Cancel</button>
-                        <button>Add Collection</button>
-                    </Modal.Footer>
-                </Modal>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add New Collection</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {/* your form code here */}
+                </Modal.Body>
+                <Modal.Footer>
+                    <button onClick={handleCloseModal}>Cancel</button>
+                    <button>Add Collection</button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }

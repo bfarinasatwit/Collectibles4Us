@@ -7,7 +7,7 @@ import {
     Image as BootImage,
     Alert as BootAlert
 } from 'react-bootstrap'
-import card from "../pictures/card.avif"
+import icon from "../pictures/icon.avif"
 
 const LoginForm = () => {
     const nav = useNavigate()
@@ -46,7 +46,7 @@ const LoginForm = () => {
     return (
         <>
             <BootForm className="my-login-form" onSubmit={handleSubmit}>
-                <BootImage rounded src={card} ></BootImage>
+                <BootImage rounded src={icon} ></BootImage>
 
                 {invalidLogin &&
                     <BootAlert dismissible variant='danger' onClose={() => setInvalidLogin(false)}>
