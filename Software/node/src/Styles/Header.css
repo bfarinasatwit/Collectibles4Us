@@ -1,3 +1,10 @@
 .Header{
-    
+    background-color: rgb(0, 0, 255);
+    box-sizing:borderBox;
+    width:100%; 
+    display:flex;
+    justify-content:Center;
+    align-items:baseline;
+    padding:1em;
+    margin-bottom:2em;
 }
