@@ -7,13 +7,9 @@
 
     $last = "Walker";
 
-    $email = "walkerh4@wit.edu";
+    $email = "random@me.com";
 
-    $passwd = "ad";
+    $passwd = "superpass";
 
-    $loginModel->newUser($first, $last, $email, $passwd);
-    
-    $response = json_encode($loginModel->compareCredentials($email, $passwd));
-
-    echo $response;
+    var_dump($loginModel->compareCredentials($email, $passwd));
 ?>
