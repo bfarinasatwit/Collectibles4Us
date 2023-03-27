@@ -15,7 +15,7 @@ values ('Brodi', 'Farinas', (SHA2(CONCAT('superpass'), 256)), 'random@me.com'),
 CREATE TABLE albums(
     album_id int NOT NULL AUTO_INCREMENT,
     album_name varchar(255) NOT NULL,
-    album_thumbnail varchar(255) NOT NULL,
+    album_image_id int AUTO_INCREMENT,
     collect_type varchar(255) NOT NULL,
     PRIMARY KEY (album_id),
     user_id int NOT NULL,

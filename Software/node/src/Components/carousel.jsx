@@ -6,10 +6,7 @@ import Card from 'react-bootstrap/Card'
 import AddCard from './AddCard'
 import { Modal } from 'react-bootstrap'
 
-
-
-
-const CarouselComponent = (props) => {
+const CarouselComponent = ({ uData }) => {
 
     const [showModal, setShowModal] = useState(false);
     const handleShowModal = () => {
@@ -18,26 +15,17 @@ const CarouselComponent = (props) => {
     const handleCloseModal = () => {
         setShowModal(false);
     }
-    //logs the id number in the console for troubleshooting
-    { console.log(props.id) }
-    //empty array for data to be filled with 
-    const [data, setdata] = useState([])
-    //useEffect is ran on page load
-    useEffect(() => {
-        //fetching from controller with method GET
-        fetch('http://localhost:3300/index.php/home/getProfile?user_id=' + props.id,
+
+    const getImage = async (id) => {
+        const response = await fetch("http://localhost:3300/index.php/home/getImage?image_id=" + id,
             {
                 method: 'GET',
-                mode: 'cors',
+                mode: 'cors'
             }
-        ).then(response => response.json())
-            //setting data
-            .then(data => {
-                setdata(data)
-            })
-            .catch(error => console.error(error))
-    }, []);
-
+        )
+        const imgBlob = await response.blob()
+        return URL.createObjectURL(imgBlob)
+    }
 
     //customizing the carousel only worry about desktop for now
     const responsive = {
@@ -58,12 +46,8 @@ const CarouselComponent = (props) => {
         }
     };
 
-
-
     return (
-
         <div>
-
             <Carousel
                 showDots={false} //removes the dots underneath the carousel
                 responsive={responsive} //getting the responsive function from above
@@ -77,11 +61,8 @@ const CarouselComponent = (props) => {
                 containerClass="carousel-container"
                 itemClass="carousel-item-padding-40-px"
             >
-                {/**Logging data for TS */}
-                {console.log(data)}
-
                 {/**Mapping data*/}
-                {data.map(album => {
+                {uData.map(album => {
                     {/**Creation of each div happens here*/ }
                     return <Card
                         className='shadow'
@@ -97,7 +78,7 @@ const CarouselComponent = (props) => {
                         {console.log(album.album_name)}
                         {/**Image for each div, require is needed to "import" the file */}
                         <Card.Img
-                            src={require("../media/" + album.album_thumbnail)}
+                            src={getImage(album.album_image_id)}
                             style={{
                                 height: "75%",
                                 objectFit: "cover",
@@ -107,7 +88,6 @@ const CarouselComponent = (props) => {
                         <Card.Title>{album.album_name}</Card.Title>
                         <Card.Body className='type'>{album.collect_type}</Card.Body>
                     </Card>
-
                 })}
 
                 {/**I want to create a div that goes into the carousel to add collections
@@ -119,8 +99,8 @@ const CarouselComponent = (props) => {
                 */}
 
                 <AddCard className="add-card" onClick={handleShowModal} />
-
             </Carousel>
+
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add New Collection</Modal.Title>
@@ -136,6 +116,5 @@ const CarouselComponent = (props) => {
         </div>
     )
 }
-
 
 export default CarouselComponent;

@@ -15,7 +15,7 @@ class LoginModel extends Database
         // inserts then
         $this->insert("INSERT INTO users VALUES (NULL, ?, ?, ?, ?)", ["ssss", $firstName, $lastName, hash('sha256', $passwd), $email]);
         // returns their info. This may be a little inefficient when you could just not query sql
-        return $this->select("SELECT * FROM users WHERE email = ? AND user_pass = ?", ["ss", $email, hash('sha256', $passwd)]);
+        return $this->select("SELECT * FROM users WHERE user_id = (SELECT MAX(user_id) FROM users)");
     }
 
     // simple function to query checking if a user exists already

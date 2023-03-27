@@ -12,6 +12,7 @@
     $passwd = "ad";
 
     $loginModel->newUser($first, $last, $email, $passwd);
+    
     $response = json_encode($loginModel->compareCredentials($email, $passwd));
 
     echo $response;
