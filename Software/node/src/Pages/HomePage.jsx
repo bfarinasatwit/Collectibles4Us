@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CarouselComponent from '../Components/Carousel'
+import CarouselComponent from '../Components/carousel'
 import { useLocation } from 'react-router-dom'
 import '../Styles/Header.css'
 const HomePage = () => {
@@ -18,6 +18,7 @@ const HomePage = () => {
             )
             const data = await response.json()
         }
+        loadPage()
     })
 
     return (
