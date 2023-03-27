@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import '../Styles/carousel.css'
 import Card from 'react-bootstrap/Card'
 import AddCard from './AddCard'
 import { Modal } from 'react-bootstrap'
+import AlbumImage from './AlbumImage'
 
 const CarouselComponent = ({ uData }) => {
-
+    console.log(uData)
     const [showModal, setShowModal] = useState(false);
     const handleShowModal = () => {
         setShowModal(true);
@@ -24,6 +25,7 @@ const CarouselComponent = ({ uData }) => {
             }
         )
         const imgBlob = await response.blob()
+        console.log(imgBlob)
         return URL.createObjectURL(imgBlob)
     }
 
@@ -75,10 +77,9 @@ const CarouselComponent = ({ uData }) => {
                     >
 
                         {/**Not important just used for TS */}
-                        {console.log(album.album_name)}
+                        {console.log(album.album_image_id)}
                         {/**Image for each div, require is needed to "import" the file */}
-                        <Card.Img
-                            src={getImage(album.album_image_id)}
+                        <AlbumImage id = {album.album_image_id}
                             style={{
                                 height: "75%",
                                 objectFit: "cover",

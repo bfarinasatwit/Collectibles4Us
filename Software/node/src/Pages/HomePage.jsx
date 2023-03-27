@@ -17,9 +17,10 @@ const HomePage = () => {
                 }
             )
             const data = await response.json()
+            setUserData(data)
         }
         loadPage()
-    })
+    },[])
 
     return (
         <>

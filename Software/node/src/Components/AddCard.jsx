@@ -14,7 +14,7 @@ const AddCard = ({ onClick }) => {
             }}
         >
             <Card.Img
-               
+               src = {require("../pictures/edit.png")}
                 style={{
                     height: "75%",
                     objectFit: "cover",
