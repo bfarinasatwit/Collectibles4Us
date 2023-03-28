@@ -204,11 +204,12 @@ class HomeController extends BaseController
                     throw new Exception("No image id provided.\n");
                 }
 
-                $image = file_get_contents("../media/image" . $image_id . ".jpg");
+                $image = file_get_contents("./media/image" . $image_id . ".jpg");
 
                 if (!$image) {
                     throw new Exception("No jpg found with id " . $image_id);
                 }
+                
 
             } catch (Exception $e) {
                 // any caught exceptions will still be formatted to be send to an endpoint

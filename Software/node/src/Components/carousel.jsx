@@ -17,18 +17,6 @@ const CarouselComponent = ({ uData }) => {
         setShowModal(false);
     }
 
-    const getImage = async (id) => {
-        const response = await fetch("http://localhost:3300/index.php/home/getImage?image_id=" + id,
-            {
-                method: 'GET',
-                mode: 'cors'
-            }
-        )
-        const imgBlob = await response.blob()
-        console.log(imgBlob)
-        return URL.createObjectURL(imgBlob)
-    }
-
     //customizing the carousel only worry about desktop for now
     const responsive = {
         desktop: {
@@ -80,11 +68,7 @@ const CarouselComponent = ({ uData }) => {
                         {console.log(album.album_image_id)}
                         {/**Image for each div, require is needed to "import" the file */}
                         <AlbumImage id = {album.album_image_id}
-                            style={{
-                                height: "75%",
-                                objectFit: "cover",
-                                objectPosition: "center"
-                            }}
+                            
                         />
                         <Card.Title>{album.album_name}</Card.Title>
                         <Card.Body className='type'>{album.collect_type}</Card.Body>
