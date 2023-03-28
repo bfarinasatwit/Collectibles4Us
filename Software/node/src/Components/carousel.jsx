@@ -68,7 +68,6 @@ const CarouselComponent = ({ uData }) => {
                         {console.log(album.album_image_id)}
                         {/**Image for each div, require is needed to "import" the file */}
                         <AlbumImage id = {album.album_image_id}
-                            
                         />
                         <Card.Title>{album.album_name}</Card.Title>
                         <Card.Body className='type'>{album.collect_type}</Card.Body>

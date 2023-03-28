@@ -206,7 +206,7 @@ class HomeController extends BaseController
 
                 $image = file_get_contents("./media/image" . $image_id . ".jpg");
 
-                if (!$image) {
+                if (!$imageData) {
                     throw new Exception("No jpg found with id " . $image_id);
                 }
                 

@@ -1,15 +1,10 @@
 <?php
-    require("./Inc/Bootstrap.php");
+    // require("./Inc/Bootstrap.php");
     
-    $loginModel = new LoginModel("localhost:3306");
+    // $loginModel = new LoginModel("localhost:3306");
+    // $homeModel = new HomeModel;
 
-    $first = "Henry";
+    $img_id = 1;
 
-    $last = "Walker";
-
-    $email = "random@me.com";
-
-    $passwd = "superpass";
-
-    var_dump($loginModel->compareCredentials($email, $passwd));
+    $imageSrc = base64_encode(file_get_contents("./media/image" . $img_id . ".jpg"));
 ?>
