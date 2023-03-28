@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Card from 'react-bootstrap/Card'
 
 const AlbumImage = (props) => {
-    const [img, setimg] = useState(null)
+    const [imgSrc, setImgSrc] = useState(null)
     useEffect(() => {
         const getImage = async (id) => {
             const response = await fetch("http://localhost:3300/index.php/home/getImage?image_id=" + id,
@@ -11,18 +11,15 @@ const AlbumImage = (props) => {
                     mode: 'cors'
                 }
             )
-            const imgBlob = await response.blob()
-            console.log(imgBlob)
-            setimg(URL.createObjectURL(imgBlob))
-            console.log(id)
-            console.log(img)
+            const data = await response.json()
+            console.log(data)
+            setImgSrc("data:image/jpeg;base64," + atob(data.imageData))
         }
         getImage(props.id)
-    },[])
+    }, [])
 
-    return(
-        
-        <Card.Img src = {require(img)}/>
+    return (
+        <Card.Img src={imgSrc} />
     )
 
 }

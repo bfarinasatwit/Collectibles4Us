@@ -204,9 +204,9 @@ class HomeController extends BaseController
                     throw new Exception("No image id provided.\n");
                 }
 
-                $image = file_get_contents("../media/image" . $image_id . ".jpg");
+                $imageData = base64_encode(file_get_contents("../media/image" . $image_id . ".jpg"));
 
-                if (!$image) {
+                if (!$imageData) {
                     throw new Exception("No jpg found with id " . $image_id);
                 }
 
@@ -230,8 +230,8 @@ class HomeController extends BaseController
             // with no errors
         } else {
             $this->sendOutput(
-                $image,
-                array('Content-Type: image/jpeg', 'HTTP/1.1 200 OK')
+                json_encode(array('imageData' => $imageData)),
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         }
     }
