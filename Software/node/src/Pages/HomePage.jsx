@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CarouselComponent from '../Components/carousel'
 import { useLocation } from 'react-router-dom'
 import '../Styles/Header.css'
-import icon from "../pictures/icon.avif"
+
 const HomePage = () => {
     const location = useLocation();
     const userId = location.state.user_id
@@ -26,7 +26,6 @@ const HomePage = () => {
     return (
         <>
             <div className="Header">
-                <BootImage rounded src={icon}></BootImage>
                 <h1>
                     Collectibles4Us
                 </h1>
