@@ -5,16 +5,17 @@ import '../Styles/carousel.css'
 import Card from 'react-bootstrap/Card'
 import AddCard from './AddCard'
 import { Modal } from 'react-bootstrap'
+import CollectionForm from './CollectionForm'
 import AlbumImage from './AlbumImage'
 
 const CarouselComponent = ({ uData }) => {
     console.log(uData)
-    const [showModal, setShowModal] = useState(false);
-    const handleShowModal = () => {
-        setShowModal(true);
+    const [show, setShow] = useState(false);
+    const handleShow = () => {
+        setShow(true);
     }
-    const handleCloseModal = () => {
-        setShowModal(false);
+    const handleHide = () => {
+        setShow(false);
     }
 
     //customizing the carousel only worry about desktop for now
@@ -66,9 +67,8 @@ const CarouselComponent = ({ uData }) => {
 
                         {/**Not important just used for TS */}
                         {console.log(album.album_image_id)}
-                        {/**Image for each div, require is needed to "import" the file */}
-                        <AlbumImage id = {album.album_image_id}
-                        />
+                        {/**Image for each div: see AlbumImage */}
+                        <AlbumImage id = {album.album_image_id}/>
                         <Card.Title>{album.album_name}</Card.Title>
                         <Card.Body className='type'>{album.collect_type}</Card.Body>
                     </Card>
@@ -82,21 +82,10 @@ const CarouselComponent = ({ uData }) => {
                  * Edit: Changed it to a different component so it would be easier to show the modal
                 */}
 
-                <AddCard className="add-card" onClick={handleShowModal} />
+                <AddCard className="add-card" onClick={handleShow} />
             </Carousel>
-
-            <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add New Collection</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {/* your form code here */}
-                </Modal.Body>
-                <Modal.Footer>
-                    <button onClick={handleCloseModal}>Cancel</button>
-                    <button>Add Collection</button>
-                </Modal.Footer>
-            </Modal>
+                <CollectionForm showModal={show} onEsc={handleHide} id={uData.user_id}/>
+            
         </div>
     )
 }

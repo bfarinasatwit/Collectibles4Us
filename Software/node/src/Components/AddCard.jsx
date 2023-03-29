@@ -1,8 +1,15 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 
+/**
+ * This component is used to display the ability
+ * to add collections to the end user
+ * 
+ */
 const AddCard = ({ onClick }) => {
     return (
+        //styling of the card 
+        //has on click to show the modal when clicked on
         <Card
             className="shadow"
             onClick={onClick}
@@ -13,6 +20,7 @@ const AddCard = ({ onClick }) => {
                 margin: "20px"
             }}
         >
+            {/**Image + styling */}
             <Card.Img
                src = {require("../pictures/edit.png")}
                 style={{
