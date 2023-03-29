@@ -6,5 +6,7 @@
 
     $img_id = 1;
 
-    $imageSrc = base64_encode(file_get_contents("./media/image" . $img_id . ".jpg"));
+    $imageData = base64_encode(file_get_contents("./media/image" . $img_id . ".jpg"));
+
+    var_dump(json_encode(array('imageData' => $imageData)))
 ?>

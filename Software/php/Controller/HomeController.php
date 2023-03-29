@@ -208,8 +208,7 @@ class HomeController extends BaseController
 
                 if (!$image) {
                     throw new Exception("No jpg found with id " . $image_id);
-                }
-                
+                }          
 
             } catch (Exception $e) {
                 // any caught exceptions will still be formatted to be send to an endpoint
