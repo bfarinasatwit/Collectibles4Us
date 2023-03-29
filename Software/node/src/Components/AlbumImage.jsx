@@ -34,8 +34,8 @@ const AlbumImage = (props) => {
         
         <Card.Img src={img}
         style={{
-            height: "75%",
-            objectFit: "cover",
+            height: "60%",
+            objectFit: "contain",
             objectPosition: "center"
         }} />
     )

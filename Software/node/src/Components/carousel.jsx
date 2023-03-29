@@ -57,8 +57,8 @@ const CarouselComponent = ({ uData }) => {
                     return <Card
                         className='shadow'
                         style={{
-                            width: "200px",
-                            height: "300px",
+                            width: "180px",
+                            height: "240px",
                             margin: "auto"
 
                         }}

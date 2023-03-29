@@ -21,7 +21,7 @@ const HomePage = () => {
             setUserData(data)
         }
         loadPage()
-    },[])
+    }, [])
 
     return (
         <>
@@ -32,9 +32,13 @@ const HomePage = () => {
                 <h1>
                     Welcome USER
                 </h1>
-
             </div>
-            <CarouselComponent uData = {userData}/>
+            <div style={{"display": "flex"}}>
+                <CarouselComponent uData={userData} />
+                <div style={{"width": "40%"}}>
+
+                </div>
+            </div>
         </>
     )
 }

@@ -1,8 +1,6 @@
 .carousel-container{
-    width: 80%;
-    max-width: 1200px;
-    min-width: 980px;
-    margin-left:auto;
+    width: 48%;
+    min-width: 720px;
     margin-right:auto;
 }
 .add-card:hover {
