@@ -10,6 +10,7 @@ import AlbumImage from './AlbumImage'
 const CarouselComponent = ({ uData }) => {
     console.log(uData)
     const [showModal, setShowModal] = useState(false);
+    
     const handleShowModal = () => {
         setShowModal(true);
     }
