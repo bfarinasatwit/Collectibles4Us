@@ -10,29 +10,49 @@ import {
 
 const CollectionForm = (props) => {
 
-
+    
 
     const [album_name, setName] = useState('')
     const [type, setType] = useState('')
-
+    const [data, setData] = useState({})
+    const [image, setImage] = useState(null)
 
     const handleCreate = (event) => {
         event.preventDefault()
-        fetch("http://localhost:330/index.php/home/newAlbum",
+       console.log(album_name)
+       console.log(type)
+       console.log(props.id)
+        fetch("http://localhost:3300/index.php/home/newAlbum",
             {
                 method: 'PUT',
                 mode: 'cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     album_name: album_name,
-                    type: type,
+                    collect_type: type,
                     user_id: props.id
                 })
             }).then(response => response.json())
             .then(data => {
                 console.log(data);
+                setData(data)
                 //message that collection was succesfully entered
             }).catch(error => console.error(error))
+
+            const formData = new FormData();
+            formData.append('image', image)
+            formData.append('albumId', data.albumId)
+        fetch("http://localhost:3300/index.php/home/uploadAlbumImage",
+            {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: formData
+            }).then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.error(error)
+            })
     }
 
 
@@ -49,25 +69,37 @@ const CollectionForm = (props) => {
 
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
+                        Enter a Thumbnail for your Collection
+                    </BootForm.Label>
+                    <BootForm.Control
+                        required
+                        type = "file"
+                        onChange={(event) => setImage(event.target.value)}
+                    />
+                </BootForm.Group>
+
+
+                <BootForm.Group as={Col}>
+                    <BootForm.Label>
                         Enter Collection Name
                     </BootForm.Label>
                     <BootForm.Control
-                    required
-                    placeholder="Collection Name"
-                    onChange={(event) => setName(event.target.value)}
+                        required
+                        placeholder="Collection Name"
+                        onChange={(event) => setName(event.target.value)}
                     />
-                    <BootForm.Control.Feedback type = "invalid"/>
+                    <BootForm.Control.Feedback type="invalid" />
                 </BootForm.Group>
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
                         Enter Collection Type
                     </BootForm.Label>
                     <BootForm.Control
-                    required
-                    placeholder="Collection Type"
-                    onChange={(event) => setName(event.target.value)}
+                        required
+                        placeholder="Collection Type"
+                        onChange={(event) => setType(event.target.value)}
                     />
-                    <BootForm.Control.Feedback type = "invalid"/>
+                    <BootForm.Control.Feedback type="invalid" />
                 </BootForm.Group>
 
 

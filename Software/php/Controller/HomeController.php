@@ -135,7 +135,7 @@ class HomeController extends BaseController
             // with no errors
         } else {
             $this->sendOutput(
-                $response_data,
+                json_encode($response_data),
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         }
@@ -145,7 +145,7 @@ class HomeController extends BaseController
      * This function expects an http post to be made to it
      * with keys image and image_index
      */
-    public function uploadImageAction()
+    public function uploadAlbumImageAction()
     {
         // populated with errors, returns zero if no errors
         $strErrorDesc = '';
@@ -155,11 +155,21 @@ class HomeController extends BaseController
         if (strtoupper($requestMethod) == 'POST') {
             try {
                 // turns string input into a json object as an associative array
-                $postage = json_decode(file_get_contents('php://input'), true);
-                if (isset($postage['image']) && isset($postage['imageIndex']) && isset($postage['imageType'])) {
-                    move_uploaded_file($postage['image'], '../media/image' . $postage['imageIndex'] . ".jpg");
-                } else {
-                    throw new Exception("No file was sent, or no image index or type was given.\n");
+                if (isset($_FILES['image']) && isset($_POST['albumId'])) {
+                    $file = $_FILES['image'];
+                    $albumId = $_POST['albumId'];
+                
+                    // Check if the file is an image
+                    $fileType = exif_imagetype($file['tmp_name']);
+                    if ($fileType !== IMAGETYPE_JPEG) {
+                        throw new Exception('Invalid file type. Only JPEG images are allowed.');
+                    }
+                
+                    // Move the file to the server
+                    $filePath = '../media/albums/image' . $albumId . ".jpg";
+                    if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+                        throw new Exception('Failed to upload file. Please try again later.');
+                    }
                 }
             } catch (Exception $e) {
                 // any caught exceptions will still be formatted to be send to an endpoint
@@ -181,13 +191,13 @@ class HomeController extends BaseController
             // with no errors
         } else {
             $this->sendOutput(
-                json_encode(array('uploaded' => $postage['imageIndex'])),
+                json_encode(array('uploaded' => $_POST['albumId'])),
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         }
     }
 
-    public function getImageAction()
+    public function getAlbumImageAction()
     {
         // populated with errors, returns zero if no errors
         $strErrorDesc = '';
@@ -198,16 +208,16 @@ class HomeController extends BaseController
 
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                if (isset($arrQueryStringParams['image_id'])) {
-                    $image_id = $arrQueryStringParams['image_id'];
+                if (isset($arrQueryStringParams['albumId'])) {
+                    $albumId = $arrQueryStringParams['albumId'];
                 } else {
                     throw new Exception("No image id provided.\n");
                 }
 
-                $image = file_get_contents("./media/image" . $image_id . ".jpg");
+                $image = file_get_contents("./media/albums/image" . $albumId . ".jpg");
 
                 if (!$image) {
-                    throw new Exception("No jpg found with id " . $image_id);
+                    throw new Exception("No jpg found with id " . $albumId);
                 }          
 
             } catch (Exception $e) {
