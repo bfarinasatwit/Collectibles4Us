@@ -47,3 +47,5 @@ to verify that you may use those commands.
 npm install
 npm run start
 ```
+
+You will find the website at localhost:3000
