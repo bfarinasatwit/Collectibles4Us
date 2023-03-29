@@ -30,7 +30,7 @@ const HomePage = () => {
                     Collectibles4Us
                 </h1>
                 <h1 style={{color:'white', marginLeft:'28rem'}}>
-                    Welcome USER
+                    Welcome {location.state.firstName}!
                 </h1>
             </div>
             <div style={{"display": "flex"}}>
