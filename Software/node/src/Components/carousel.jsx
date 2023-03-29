@@ -8,7 +8,7 @@ import { Modal } from 'react-bootstrap'
 import CollectionForm from './CollectionForm'
 import AlbumImage from './AlbumImage'
 
-const CarouselComponent = ({ uData }) => {
+const CarouselComponent = ({ uData,id }) => {
     console.log(uData)
     const [show, setShow] = useState(false);
     const handleShow = () => {
@@ -65,9 +65,9 @@ const CarouselComponent = ({ uData }) => {
                         }}
                     >
                         {/**Not important just used for TS */}
-                        {console.log(album.album_image_id)}
+                        {console.log(album.album_id)}
                         {/**Image for each div: see AlbumImage */}
-                        <AlbumImage id = {album.album_image_id}/>
+                        <AlbumImage id = {album.album_id}/>
                         <Card.Title>{album.album_name}</Card.Title>
                         <Card.Body className='type'>{album.collect_type}</Card.Body>
                     </Card>
@@ -83,7 +83,8 @@ const CarouselComponent = ({ uData }) => {
 
                 <AddCard className="add-card" onClick={handleShow} />
             </Carousel>
-                <CollectionForm showModal={show} onEsc={handleHide} id={uData.user_id}/>
+                
+                <CollectionForm showModal={show} onEsc={handleHide} id={id}/>
             
         </>
     )
