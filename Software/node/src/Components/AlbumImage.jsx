@@ -13,7 +13,7 @@ const AlbumImage = (props) => {
         const getImage = async (id) => {
             try {
                 //fetch request
-                const response = await fetch("http://localhost:3300/index.php/home/getAlbumImage?albumId=" + id, {
+                const response = await fetch("http://localhost:3300/index.php/home/getAlbumImage?album_id=" + id, {
                     method: 'GET',
                     mode: 'cors',
                     responseType: 'blob'

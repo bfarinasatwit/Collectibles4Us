@@ -10,51 +10,51 @@ import {
 
 const CollectionForm = (props) => {
 
-
-
     const [album_name, setName] = useState('')
     const [type, setType] = useState('')
-    const [data, setData] = useState({})
+    const [newAlbumData, setNewAlbumData] = useState([])
     const [image, setImage] = useState(null)
 
     const handleCreate = (event) => {
         event.preventDefault()
-        console.log(album_name)
-        console.log(type)
-        console.log(props.id)
-        fetch("http://localhost:3300/index.php/home/newAlbum",
-            {
-                method: 'PUT',
-                mode: 'cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    album_name: album_name,
-                    collect_type: type,
-                    user_id: props.id
-                })
-            }).then(response => response.json())
-            .then(data => {
-                console.log(data)
-                setData(data)
-                //message that collection was succesfully entered
-            }).catch(error => console.error(error))
 
-        const formData = new FormData();
-        console.log(image)
-        formData.append('image', image)
-        formData.append('album_id', data[0].album_id)
-        fetch("http://localhost:3300/index.php/home/uploadAlbumImage",
-            {
-                method: 'POST',
-                mode: 'cors',
-                headers: { 'Content-Type': 'multipart/form-data' },
-                body: formData
-            }).then(response => response.json()
-            ).then(data => {
-                console.log(data)
-            }).catch((error) => {
-                console.error(error)
-            })
+        const addAlbum = async () => {
+            const response = await fetch("http://localhost:3300/index.php/home/newAlbum",
+                {
+                    method: 'PUT',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        album_name: album_name,
+                        collect_type: type,
+                        user_id: props.id
+                    })
+                })
+            const data = await response.json()
+
+            setNewAlbumData(data)
+
+            console.log(data)
+        }
+
+        const addImage = async () => {
+            const formData = new FormData();
+            formData.append('image', image)
+            formData.append('album_id', newAlbumData[0].album_id)
+
+            const response = await fetch("http://localhost:3300/index.php/home/uploadAlbumImage",
+                {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                    body: formData
+                }
+            )
+            const data = await response.json()
+            console.log(data)
+        }
+        addAlbum()
+        addImage()
     }
 
 

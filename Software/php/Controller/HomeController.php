@@ -152,6 +152,8 @@ class HomeController extends BaseController
         // gets request method
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
+        
+
         if (strtoupper($requestMethod) == 'POST') {
             try {
                 // turns string input into a json object as an associative array
@@ -168,6 +170,8 @@ class HomeController extends BaseController
                     // Move the file to the server
                     $filePath = '../media/albums/image' . $album_id . '.jpg';
                     move_uploaded_file($file['tmp_name'], $filePath);
+                } else {
+                    throw new Exception("Internal server error. ");
                 }
             } catch (Exception $e) {
                 // any caught exceptions will still be formatted to be send to an endpoint
