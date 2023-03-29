@@ -26,10 +26,10 @@ const HomePage = () => {
     return (
         <>
             <div className="Header">
-                <h1>
+                <h1 style={{color:'white', marginRight: '28rem'}}>
                     Collectibles4Us
                 </h1>
-                <h1>
+                <h1 style={{color:'white', marginLeft:'28rem'}}>
                     Welcome USER
                 </h1>
             </div>
