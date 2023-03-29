@@ -167,9 +167,7 @@ class HomeController extends BaseController
                 
                     // Move the file to the server
                     $filePath = '../media/albums/image' . $albumId . ".jpg";
-                    if (!move_uploaded_file($file['tmp_name'], $filePath)) {
-                        throw new Exception('Failed to upload file. Please try again later.');
-                    }
+                    move_uploaded_file($file['tmp_name'],$filePath);
                 }
             } catch (Exception $e) {
                 // any caught exceptions will still be formatted to be send to an endpoint

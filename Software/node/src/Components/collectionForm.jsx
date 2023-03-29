@@ -40,13 +40,13 @@ const CollectionForm = (props) => {
             }).catch(error => console.error(error))
 
             const formData = new FormData();
+            console.log(image)
             formData.append('image', image)
             formData.append('albumId', data.albumId)
         fetch("http://localhost:3300/index.php/home/uploadAlbumImage",
             {
                 method: 'POST',
                 mode: 'cors',
-                headers: { 'Content-Type': 'application/json' },
                 body: formData
             }).then((response) => {
                 console.log(response)
@@ -65,7 +65,7 @@ const CollectionForm = (props) => {
                 </BootModal.Title>
             </BootModal.Header>
 
-            <BootForm style={{ "margin": "auto", "minWidth": "60%" }} onSubmit={handleCreate}>
+            <BootForm style={{ "margin": "auto", "minWidth": "60%" }} onSubmit={handleCreate} encType="multipart/form-data">
 
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
