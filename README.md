@@ -19,17 +19,17 @@ You may also interact in DEVELOPMENT MODE by closing the docker node server and 
 
 ### Once this is installed, you will be able to run
 
-> nvm install node
+``` nvm install node ```
 
 ### to install the latest node and 
 
-> nvm list
+``` nvm list ```
 
 ### to display the node versions you have installed.
 
 to use a node version, you must run
 
-> nvm use [version]
+``` nvm use [version] ```
 
 use "nvm list" once more and confirm that you are using the latest version of node with the asterisk denoting the usage of a version.
 
@@ -37,7 +37,7 @@ use "nvm list" once more and confirm that you are using the latest version of no
 
 ### by now, you should be able to use the command npm. Try using
 
-> npm --version 
+``` npm --version ``` 
 
 to verify that you may use those commands.
 
