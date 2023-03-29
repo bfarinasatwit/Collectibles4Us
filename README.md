@@ -43,7 +43,7 @@ to verify that you may use those commands.
 
 ### Next, navigate to Collectibles4Us/Software/node
 ### run
-'''
+```
 npm install
 npm run start
-'''
+```
