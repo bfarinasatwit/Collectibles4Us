@@ -64,7 +64,6 @@ const CarouselComponent = ({ uData }) => {
 
                         }}
                     >
-
                         {/**Not important just used for TS */}
                         {console.log(album.album_image_id)}
                         {/**Image for each div: see AlbumImage */}
