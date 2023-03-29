@@ -155,19 +155,19 @@ class HomeController extends BaseController
         if (strtoupper($requestMethod) == 'POST') {
             try {
                 // turns string input into a json object as an associative array
-                if (isset($_FILES['image']) && isset($_POST['albumId'])) {
+                if (isset($_FILES['image']) && isset($_POST['album_id'])) {
                     $file = $_FILES['image'];
-                    $albumId = $_POST['albumId'];
+                    $album_id = $_POST['album_id'];
                 
                     // Check if the file is an image
                     $fileType = exif_imagetype($file['tmp_name']);
                     if ($fileType !== IMAGETYPE_JPEG) {
-                        throw new Exception('Invalid file type. Only JPEG images are allowed.');
+                        throw new Exception('Invalid file type. Only JPEG (.jpg) images are allowed.');
                     }
                 
                     // Move the file to the server
-                    $filePath = '../media/albums/image' . $albumId . ".jpg";
-                    move_uploaded_file($file['tmp_name'],$filePath);
+                    $filePath = '../media/albums/image' . $album_id . '.jpg';
+                    move_uploaded_file($file['tmp_name'], $filePath);
                 }
             } catch (Exception $e) {
                 // any caught exceptions will still be formatted to be send to an endpoint
@@ -189,7 +189,7 @@ class HomeController extends BaseController
             // with no errors
         } else {
             $this->sendOutput(
-                json_encode(array('uploaded' => $_POST['albumId'])),
+                json_encode(array('uploaded' => $album_id)),
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         }
@@ -206,8 +206,8 @@ class HomeController extends BaseController
 
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                if (isset($arrQueryStringParams['albumId'])) {
-                    $albumId = $arrQueryStringParams['albumId'];
+                if (isset($arrQueryStringParams['album_id'])) {
+                    $albumId = $arrQueryStringParams['album_id'];
                 } else {
                     throw new Exception("No image id provided.\n");
                 }

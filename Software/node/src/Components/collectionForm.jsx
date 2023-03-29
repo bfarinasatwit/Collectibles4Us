@@ -10,7 +10,7 @@ import {
 
 const CollectionForm = (props) => {
 
-    
+
 
     const [album_name, setName] = useState('')
     const [type, setType] = useState('')
@@ -19,9 +19,9 @@ const CollectionForm = (props) => {
 
     const handleCreate = (event) => {
         event.preventDefault()
-       console.log(album_name)
-       console.log(type)
-       console.log(props.id)
+        console.log(album_name)
+        console.log(type)
+        console.log(props.id)
         fetch("http://localhost:3300/index.php/home/newAlbum",
             {
                 method: 'PUT',
@@ -34,22 +34,24 @@ const CollectionForm = (props) => {
                 })
             }).then(response => response.json())
             .then(data => {
-                console.log(data);
+                console.log(data)
                 setData(data)
                 //message that collection was succesfully entered
             }).catch(error => console.error(error))
 
-            const formData = new FormData();
-            console.log(image)
-            formData.append('image', image)
-            formData.append('albumId', data.albumId)
+        const formData = new FormData();
+        console.log(image)
+        formData.append('image', image)
+        formData.append('album_id', data[0].album_id)
         fetch("http://localhost:3300/index.php/home/uploadAlbumImage",
             {
                 method: 'POST',
                 mode: 'cors',
+                headers: { 'Content-Type': 'multipart/form-data' },
                 body: formData
-            }).then((response) => {
-                console.log(response)
+            }).then(response => response.json()
+            ).then(data => {
+                console.log(data)
             }).catch((error) => {
                 console.error(error)
             })
@@ -73,7 +75,7 @@ const CollectionForm = (props) => {
                     </BootForm.Label>
                     <BootForm.Control
                         required
-                        type = "file"
+                        type="file"
                         onChange={(event) => setImage(event.target.value)}
                     />
                 </BootForm.Group>
