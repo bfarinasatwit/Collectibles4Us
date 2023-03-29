@@ -8,16 +8,16 @@ const AddCard = ({ onClick }) => {
             onClick={onClick}
             style={{
                 cursor: 'pointer',
-                width: "308px",
-                height: "400px",
-                margin: "20px"
+                width: "200px",
+                height: "300px",
+                margin: "auto"
             }}
         >
             <Card.Img
                src = {require("../pictures/edit.png")}
                 style={{
                     height: "75%",
-                    objectFit: "cover",
+                    objectFit: "contain",
                     objectPosition: "center"
                 }}
             />

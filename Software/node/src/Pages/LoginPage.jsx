@@ -20,8 +20,6 @@ const LoginPage = () => {
                 </BootButton>
 
                 <NewUserForm showModal={show} onEsc={handleHide}/>
-
-                
             </div>
         </>
     )

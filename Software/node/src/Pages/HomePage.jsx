@@ -34,8 +34,7 @@ const HomePage = () => {
                 </h1>
 
             </div>
-            <CarouselComponent uData = {userData} />
-
+            <CarouselComponent uData = {userData}/>
         </>
     )
 }

@@ -37,7 +37,7 @@ const CarouselComponent = ({ uData }) => {
     };
 
     return (
-        <div>
+        <>
             <Carousel
                 showDots={false} //removes the dots underneath the carousel
                 responsive={responsive} //getting the responsive function from above
@@ -57,9 +57,9 @@ const CarouselComponent = ({ uData }) => {
                     return <Card
                         className='shadow'
                         style={{
-                            width: "308px",
-                            height: "400px",
-                            margin: "20px"
+                            width: "200px",
+                            height: "300px",
+                            margin: "auto"
 
                         }}
                     >
@@ -97,7 +97,7 @@ const CarouselComponent = ({ uData }) => {
                     <button>Add Collection</button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </>
     )
 }
 

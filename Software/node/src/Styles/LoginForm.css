@@ -1,4 +1,5 @@
 .my-login-form {
+    padding-top: 150px;
     max-width: 40vw;
     margin: auto;
 }
@@ -7,7 +8,6 @@
 }
 body{
     height: 100vh;
-    padding-top: 150px;
 }
 img{
     margin-bottom: 25px;
