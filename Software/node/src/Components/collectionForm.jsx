@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
-    CloseButton as BootClose,
     Form as BootForm,
     Button as BootButton,
     Modal as BootModal,
@@ -12,11 +11,12 @@ const CollectionForm = (props) => {
 
     const [album_name, setName] = useState('')
     const [type, setType] = useState('')
-    const [newAlbumData, setNewAlbumData] = useState([])
+    const [newAlbumData, setNewAlbumData] = useState({})
     const [image, setImage] = useState(null)
 
     const handleCreate = (event) => {
         event.preventDefault()
+        console.log(props.userData)
 
         const addAlbum = async () => {
             const response = await fetch("http://localhost:3300/index.php/home/newAlbum",
@@ -27,20 +27,22 @@ const CollectionForm = (props) => {
                     body: JSON.stringify({
                         album_name: album_name,
                         collect_type: type,
-                        user_id: props.id
+                        user_id: props.userData.user_id
                     })
                 })
             const data = await response.json()
 
-            setNewAlbumData(data)
+            setNewAlbumData(data[0])
 
-            console.log(data)
+            console.log(newAlbumData)
         }
+
+        addAlbum()
 
         const addImage = async () => {
             const formData = new FormData();
             formData.append('image', image)
-            formData.append('album_id', newAlbumData[0].album_id)
+            formData.append('album_id', newAlbumData.album_id)
 
             const response = await fetch("http://localhost:3300/index.php/home/uploadAlbumImage",
                 {
@@ -51,9 +53,10 @@ const CollectionForm = (props) => {
                 }
             )
             const data = await response.json()
+
             console.log(data)
         }
-        addAlbum()
+
         addImage()
     }
 
@@ -80,7 +83,6 @@ const CollectionForm = (props) => {
                     />
                 </BootForm.Group>
 
-
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
                         Enter Collection Name
@@ -104,26 +106,11 @@ const CollectionForm = (props) => {
                     <BootForm.Control.Feedback type="invalid" />
                 </BootForm.Group>
 
-
-
-
-
                 <BootButton className="form-control" variant="dark" style={{ "marginTop": "0.5rem", "marginBottom": "6rem" }} type="submit"  >
                     Submit
                 </BootButton>
             </BootForm>
-
-
         </BootModal>
-
-
-
-
-
-
     )
-
-
-
 }
 export default CollectionForm;
