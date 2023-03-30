@@ -7,8 +7,7 @@ import AddCard from './AddCard'
 import CollectionForm from './CollectionForm'
 import AlbumImage from './AlbumImage'
 
-const CarouselComponent = ({ albumData, userId }) => {
-    console.log(albumData)
+const CarouselComponent = ({ albumData, userData }) => {
     const [show, setShow] = useState(false);
     const handleShow = () => {
         setShow(true);
@@ -64,7 +63,7 @@ const CarouselComponent = ({ albumData, userId }) => {
                         }}
                     >
                         {/**Not important just used for TS */}
-                        {console.log(album.album_id)}
+                        {/* {console.log(album.album_id)} */}
                         {/**Image for each div: see AlbumImage */}
                         <AlbumImage id={album.album_id} />
                         <Card.Title>{album.album_name}</Card.Title>
@@ -83,7 +82,7 @@ const CarouselComponent = ({ albumData, userId }) => {
                 <AddCard className="add-card" onClick={handleShow} />
             </Carousel>
 
-            <CollectionForm showModal={show} onEsc={handleHide} id={userId} />
+            <CollectionForm showModal={show} onEsc={handleHide} userData={userData} />
         </>
     )
 }
