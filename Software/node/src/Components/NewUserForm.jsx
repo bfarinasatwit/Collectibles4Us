@@ -17,66 +17,74 @@ const NewUserForm = (props) => {
     const [email, setEmail] = useState('')
     const [passwd, setPasswd] = useState('')
     const [confpasswd, setConf] = useState('')
-    const [usedEmail, setUsedEmail] = useState('')
+    const [emailError, setEmailError] = useState('Email must contain an @ followed by a .domain ending')
     const [validated, setValidated] = useState(false);
+    const [passError, setPassError] = useState('')
+    const [matchError, setMatchError] = useState('')
+    
 
     
-    function check(event){
+    function check(){
         //password check function
         if (passwd != confpasswd || passwd.length < 8 ){
             console.log(passwd)
             console.log(confpasswd)
             setValidated(false)
         }
+        else{
+            setValidated(true)
+        }
     }
 
     useEffect(() => {
         //delays last password tick so confirmed pass is not delayed one input
-        if((passwd !== "" && confpasswd !== "") && (passwd !== 
-           confpasswd)){
+        if((passwd !== "" || confpasswd !== "" || (passwd != confpasswd) || (confpasswd.length || passwd.length < 8))){
                  setValidated(false)
-    
+                 console.log("invalid pass")
+                 setPassError("Invalid password")
+                 setMatchError("Invalid password")
+                 if (passwd != confpasswd){
+                    setMatchError("Passwords do not match")
+                 }
         }
-    
+
+       
        check()
-       setValidated(true)   
+          
     
       }, [passwd, confpasswd])
 
-    /*
-    handleChange = async function(event) {
+    function checkValidity(){
+        if(!(!!firstName)) {
+            console.log("Missing First Name");
+            setValidated(false)
+            return
+        }
+        if(!(!!lastName)) {
+            console.log("Missing Last Name")
+            setValidated(false)
+            return
+        }
+        if(!email.includes("@") || !email.substring(email.lastIndexOf("@")).includes(".") || !email.substring(email.lastIndexOf(".") + 1)) {
+            setEmailError("Email must contain an @ followed . and domain ending")
+            setValidated(false)
+            return
+        }
         check();
-        await this.setConf({confpasswd: event.target.value});
-        check();
-        console.log(this.state.confpasswd);
-    }
-    */
         
+    }
 
     
     const handleCreate = (event) => {
         
-        event.preventDefault()
-        
+        event.preventDefault();
         check(); //check password redundancy
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        setValidated(true);
+        
 
-        if (!email.includes("@") || !email.substring(email.lastIndexOf("@") + 1).includes(".") || !email.substring(email.lastIndexOf(".") + 1)){
-            setUsedEmail("Email must contain an @ followed . and domain ending")
-            console.log(email)
-            setValidated(false)
-        }
-        //redundant checks
-        if(passwd != confpasswd || passwd.length < 8) {
-            setValidated(false)
-        } else {
-            setValidated(true)
-        }
+        const forms = document.querySelectorAll('form');
+        const form = forms[0];
+
+        checkValidity()
 
         console.log(validated)
         if (validated == true){
@@ -97,7 +105,8 @@ const NewUserForm = (props) => {
             if(!data.error){
                 nav("/home", { state: data[0]})
             }else {
-                setUsedEmail("The email entered has already been used.")
+                console.log(emailError)
+                setEmailError("The email entered has already been used.")
             }
             })
             .catch(error => console.error(error))
@@ -119,7 +128,7 @@ const NewUserForm = (props) => {
                     <BootForm.Label className="form-control" style={{ "marginTop": "2rem" }}>
                         First Name
                     </BootForm.Label>
-                    <BootForm.Control required placeholder="First name" onChange={(event) => setFirstName(event.target.value)} />
+                    <BootForm.Control required isInvalid = {!/[a-zA-Z]/.test(firstName)} placeholder="First name" onChange={(event) => setFirstName(event.target.value)} />
                     {/*custom feedback div*/}
                     <BootForm.Control.Feedback type = "invalid"> 
                             Please enter your first name
@@ -130,7 +139,7 @@ const NewUserForm = (props) => {
                     <BootForm.Label className="form-control" style={{ "marginTop": "0.5rem" }}>
                         Last Name
                     </BootForm.Label>
-                    <BootForm.Control required placeholder="Last name" onChange={(event) => setLastName(event.target.value)} />
+                    <BootForm.Control required type = "text" isInvalid = {!/[a-zA-Z]/.test(lastName) } placeholder="Last name" onChange={(event) => setLastName(event.target.value)} />
                     <BootForm.Control.Feedback type = "invalid"> 
                             Please enter your Last name
                     </BootForm.Control.Feedback>
@@ -140,9 +149,10 @@ const NewUserForm = (props) => {
                     <BootForm.Label className="form-control" style={{ "marginTop": "0.5rem" }}>
                         Email Address
                     </BootForm.Label>
-                    <BootForm.Control required type="email" placeholder = {"Email"} onChange={(event) => setEmail(event.target.value)} pattern = "[A-Za-z0-9]{1,30}@[A-Za-z]{1,30}.[A-Za-z]{1,10}"/>
+                    <BootForm.Control required type="email" isInvalid = {!email.includes("@") || !email.substring(email.lastIndexOf("@")).includes(".") || !email.substring(email.lastIndexOf(".") + 1)
+                || emailError == "The email entered has already been used."} placeholder = {"Email"} onChange={(event) => setEmail(event.target.value)} pattern = "[A-Za-z0-9]{1,30}@[A-Za-z0-9]{1,30}.[A-Za-z]{1,10}"/>
                     <BootForm.Control.Feedback type = "invalid"> 
-                        {usedEmail}
+                        {emailError}
                     </BootForm.Control.Feedback>
                 </BootForm.Group>
 
@@ -150,9 +160,9 @@ const NewUserForm = (props) => {
                 <BootForm.Label className="form-control" style={{ "marginTop": "0.5rem" }}>
                     Password
                 </BootForm.Label>
-                <BootForm.Control required id = "password" name = "password"  type="password" placeholder="Enter password" onChange={(event) => {setPasswd(event.target.value)}} pattern="^\S{8,}$" />
+                <BootForm.Control required id = "password" name = "password" isInvalid = {passwd.length < 8 || !/[a-z]/.test(passwd) || !/[A-Z]/.test(passwd) || !/[0-9]/.test(passwd)} type="password" placeholder="Enter password" onChange={(event) => {setPasswd(event.target.value)}} pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" />
                 <BootForm.Control.Feedback type = "invalid"> 
-                    <p>Password must contain at least 8 characters, <br />  one upper and lowercase letter, and a number</p>
+                    {passError}
                 </BootForm.Control.Feedback>
                 </BootForm.Group>
 
@@ -160,9 +170,9 @@ const NewUserForm = (props) => {
                 <BootForm.Label className="form-control" style={{ "marginTop": "0.5rem" }}>
                     Confirm Password    
                 </BootForm.Label>
-                <BootForm.Control required id="confirm_password" name="password_two"  type="password" pattern="^\S{6,}$" placeholder="Confirm password" onInput={(event) => {setConf(event.target.value); check(event.target)}} onClick = {() => check()}/>
+                <BootForm.Control   required id="confirm_password" isInvalid = {passwd != confpasswd || passwd.length < 8 || !/[a-z]/.test(passwd) || !/[A-Z]/.test(passwd) || !/[0-9]/.test(passwd)} name="password_two"  type="password"  placeholder="Confirm password" onInput={(event) => {setConf(event.target.value); check(event.target)}} pattern = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"/>
                 <BootForm.Control.Feedback type = "invalid"> 
-                    Passwords must match
+                    {matchError}
                 </BootForm.Control.Feedback>
                 </BootForm.Group>
 
