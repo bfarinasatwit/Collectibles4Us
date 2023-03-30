@@ -4,12 +4,11 @@ import "react-multi-carousel/lib/styles.css";
 import '../Styles/carousel.css'
 import Card from 'react-bootstrap/Card'
 import AddCard from './AddCard'
-import { Modal } from 'react-bootstrap'
 import CollectionForm from './CollectionForm'
 import AlbumImage from './AlbumImage'
 
-const CarouselComponent = ({ uData,id }) => {
-    console.log(uData)
+const CarouselComponent = ({ albumData, userId }) => {
+    console.log(albumData)
     const [show, setShow] = useState(false);
     const handleShow = () => {
         setShow(true);
@@ -53,7 +52,7 @@ const CarouselComponent = ({ uData,id }) => {
                 itemClass="carousel-item-padding-40-px"
             >
                 {/**Mapping data*/}
-                {uData.map(album => {
+                {albumData.map(album => {
                     {/**Creation of each div happens here*/ }
                     return <Card
                         className='shadow'
@@ -67,7 +66,7 @@ const CarouselComponent = ({ uData,id }) => {
                         {/**Not important just used for TS */}
                         {console.log(album.album_id)}
                         {/**Image for each div: see AlbumImage */}
-                        <AlbumImage id = {album.album_id}/>
+                        <AlbumImage id={album.album_id} />
                         <Card.Title>{album.album_name}</Card.Title>
                         <Card.Body className='type'>{album.collect_type}</Card.Body>
                     </Card>
@@ -83,9 +82,8 @@ const CarouselComponent = ({ uData,id }) => {
 
                 <AddCard className="add-card" onClick={handleShow} />
             </Carousel>
-                
-                <CollectionForm showModal={show} onEsc={handleHide} id={id}/>
-            
+
+            <CollectionForm showModal={show} onEsc={handleHide} id={userId} />
         </>
     )
 }

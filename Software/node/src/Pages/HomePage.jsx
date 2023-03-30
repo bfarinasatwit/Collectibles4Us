@@ -7,7 +7,7 @@ const HomePage = () => {
     const location = useLocation();
     const userId = location.state.user_id
 
-    const [userData, setUserData] = useState([])
+    const [albumData, setAlbumData] = useState([])
 
     useEffect(() => {
         const loadPage = async () => {
@@ -18,7 +18,7 @@ const HomePage = () => {
                 }
             )
             const data = await response.json()
-            setUserData(data)
+            setAlbumData(data)
         }
         loadPage()
     }, [])
@@ -34,7 +34,7 @@ const HomePage = () => {
                 </h1>
             </div>
             <div style={{"display": "flex"}}>
-                <CarouselComponent uData={userData} id={userId} />
+                <CarouselComponent albumData={albumData} id={userId} />
                 <div style={{"width": "40%"}}>
                     
                 </div>
