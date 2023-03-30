@@ -150,7 +150,7 @@ const NewUserForm = (props) => {
                 <BootForm.Label className="form-control" style={{ "marginTop": "0.5rem" }}>
                     Password
                 </BootForm.Label>
-                <BootForm.Control required id = "password" name = "password"  type="password" placeholder="Enter password" onChange={(event) => {setPasswd(event.target.value)}} pattern="^\S{6,}$" />
+                <BootForm.Control required id = "password" name = "password"  type="password" placeholder="Enter password" onChange={(event) => {setPasswd(event.target.value)}} pattern="^\S{8,}$" />
                 <BootForm.Control.Feedback type = "invalid"> 
                     <p>Password must contain at least 8 characters, <br />  one upper and lowercase letter, and a number</p>
                 </BootForm.Control.Feedback>
