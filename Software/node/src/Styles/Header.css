@@ -1,5 +1,6 @@
 .Header{
     background-color: rgb(128, 128, 128);
+    background-image: linear-gradient(rgb(50.2, 50.2, 50.2), rgb(128, 128, 128));
     box-sizing:borderBox;
     width:100%; 
     display:flex;
