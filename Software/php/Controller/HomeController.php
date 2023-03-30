@@ -107,14 +107,15 @@ class HomeController extends BaseController
                 $postage = json_decode(file_get_contents('php://input'), true);
 
                 if (isset($postage['album_name']) && isset($postage['collect_type']) && isset($postage['user_id'])) {
-                    $response_data = $newAlbumModel->newAlbum(
-                        $postage['album_name'],
-                        $postage['collect_type'],
-                        $postage['user_id']
-                    );
+                        $album_name = $postage['album_name'];
+                        $collect_type = $postage['collect_type'];
+                        $user_id = $postage['user_id'];
                 } else {
                     throw new Exception("Server error: not enough data sent. (album_name, collect_type, user_id)\n");
                 }
+
+                $response_data = $newAlbumModel->newAlbum($album_name, $collect_type, $user_id);
+
             } catch (Exception $e) {
                 // any caught exceptions will still be formatted to be send to an endpoint
                 // this is WIP and we need to encompass more errors. Ex. Database connection error
@@ -152,7 +153,7 @@ class HomeController extends BaseController
         // gets request method
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-        
+
 
         if (strtoupper($requestMethod) == 'POST') {
             try {
@@ -160,13 +161,13 @@ class HomeController extends BaseController
                 if (isset($_FILES['image']) && isset($_POST['album_id'])) {
                     $file = $_FILES['image'];
                     $album_id = $_POST['album_id'];
-                
+
                     // Check if the file is an image
                     $fileType = exif_imagetype($file['tmp_name']);
                     if ($fileType !== IMAGETYPE_JPEG) {
                         throw new Exception('Invalid file type. Only JPEG (.jpg) images are allowed.');
                     }
-                
+
                     // Move the file to the server
                     $filePath = '../media/albums/image' . $album_id . '.jpg';
                     move_uploaded_file($file['tmp_name'], $filePath);
@@ -220,7 +221,7 @@ class HomeController extends BaseController
 
                 if (!$image) {
                     throw new Exception("No jpg found with id " . $albumId);
-                }          
+                }
 
             } catch (Exception $e) {
                 // any caught exceptions will still be formatted to be send to an endpoint

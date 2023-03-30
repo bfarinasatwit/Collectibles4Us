@@ -22,6 +22,10 @@ class HomeModel extends Database
                                   WHERE user_id = ?", ['i', $id]);
     }
 
+    public function checkExistingAlbum($name, $user_id) {
+        return $this->select("SELECT * FROM albums WHERE album_name = ? AND user_id = ?", ['ss', $name, $user_id]);
+    }
+
     public function newAlbum($name, $type, $user_id)
     {
         if ($this->select("SELECT * FROM albums WHERE album_name = ? AND user_id = ?", ['ss', $name, $user_id])) {

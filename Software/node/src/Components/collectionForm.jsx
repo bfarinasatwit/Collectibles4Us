@@ -4,19 +4,20 @@ import {
     Button as BootButton,
     Modal as BootModal,
     Col as Col,
+    Alert as BootAlert
 } from 'react-bootstrap'
 
 
 const CollectionForm = (props) => {
 
-    const [album_name, setName] = useState('')
+    const [name, setName] = useState('')
     const [type, setType] = useState('')
     const [newAlbumData, setNewAlbumData] = useState({})
     const [image, setImage] = useState(null)
+    const [addAlbumError, setAddAlbumError] = useState('')
 
     const handleCreate = (event) => {
         event.preventDefault()
-        console.log(props.userData)
 
         const addAlbum = async () => {
             const response = await fetch("http://localhost:3300/index.php/home/newAlbum",
@@ -25,19 +26,24 @@ const CollectionForm = (props) => {
                     mode: 'cors',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        album_name: album_name,
+                        album_name: name,
                         collect_type: type,
                         user_id: props.userData.user_id
                     })
                 })
             const data = await response.json()
 
-            setNewAlbumData(data[0])
-
-            console.log(newAlbumData)
+            if (data.error) {
+                setAddAlbumError('This album name has already been used.')
+                console.error(data)
+                console.log(newAlbumData)
+            } else {
+                setNewAlbumData(data[0])
+            }
         }
 
         addAlbum()
+        console.log(newAlbumData)
 
         const addImage = async () => {
             const formData = new FormData();
@@ -57,7 +63,10 @@ const CollectionForm = (props) => {
             console.log(data)
         }
 
-        addImage()
+        if (Object.keys(newAlbumData).length !== 0) {
+            console.log("Calling addImage")
+            addImage()
+        }
     }
 
 
@@ -71,6 +80,13 @@ const CollectionForm = (props) => {
             </BootModal.Header>
 
             <BootForm style={{ "margin": "auto", "minWidth": "60%" }} onSubmit={handleCreate} encType="multipart/form-data">
+
+                <BootForm.Group as={Col}>
+                    {addAlbumError &&
+                        <BootAlert variant='danger' dismissible onClose={setAddAlbumError('')}>
+                            This album name has already been used.
+                        </BootAlert>}
+                </BootForm.Group>
 
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
