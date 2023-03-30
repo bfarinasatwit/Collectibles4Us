@@ -26,10 +26,10 @@ const HomePage = () => {
     return (
         <>
             <div className="Header">
-                <h1 style={{color:'white', marginRight: 'auto'}}>
+                <h1 style={{color:'black', marginRight: 'auto'}}>
                     Collectibles4Us
                 </h1>
-                <h1 style={{color:'white', marginLeft: 'auto'}}>
+                <h1 style={{color:'black', marginLeft: 'auto'}}>
                     Welcome {location.state.firstName}!
                 </h1>
             </div>
