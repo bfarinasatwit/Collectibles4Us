@@ -50,7 +50,7 @@ npm run start
 
 You will find the website at localhost:3000
 
-#License
+# License
 
 Collectibles4Us is a website that allows users to upload and view their collectibles.
 Copyright (C) 2023  Jonathan Campbell, Brodi Farinas, Alexander Pancyck, and Henry Walker
