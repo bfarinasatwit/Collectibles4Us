@@ -163,13 +163,10 @@ class HomeController extends BaseController
                     $album_id = $_POST['album_id'];
 
                     // Check if the file is an image
-                    $fileType = exif_imagetype($file['tmp_name']);
-                    if ($fileType !== IMAGETYPE_JPEG) {
-                        throw new Exception('Invalid file type. Only JPEG (.jpg) images are allowed.');
-                    }
+
 
                     // Move the file to the server
-                    $filePath = '../media/albums/image' . $album_id . '.jpg';
+                    $filePath = './media/albums/image' . $album_id . '.jpg';
                     move_uploaded_file($file['tmp_name'], $filePath);
                 } else {
                     throw new Exception("Internal server error. ");
@@ -194,7 +191,7 @@ class HomeController extends BaseController
             // with no errors
         } else {
             $this->sendOutput(
-                json_encode(array('uploaded' => $album_id)),
+                json_encode(array('uploaded' => $album_id, 'file_path' => $filePath)),
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         }
