@@ -20,12 +20,12 @@ const CarouselComponent = ({ albumData, userData }) => {
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 3, //how many items displayed at once
+            items: 4, //how many items displayed at once
             slidesToSlide: 1 // optional, default to 1.
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
-            items: 3,
+            items: 4,
             slidesToSlide: 1 // optional, default to 1.
         },
         mobile: {
@@ -56,8 +56,8 @@ const CarouselComponent = ({ albumData, userData }) => {
                     return <Card
                         className='shadow'
                         style={{
-                            width: "180px",
-                            height: "240px",
+                            width: "120px",
+                            height: "180px",
                             margin: "auto"
 
                         }}
@@ -66,8 +66,8 @@ const CarouselComponent = ({ albumData, userData }) => {
                         {/* {console.log(album.album_id)} */}
                         {/**Image for each div: see AlbumImage */}
                         <AlbumImage id={album.album_id} />
-                        <Card.Title>{album.album_name}</Card.Title>
-                        <Card.Body className='type'>{album.collect_type}</Card.Body>
+                        <Card.Title style={{"fontSize": "16px"}}>{album.album_name}</Card.Title>
+                        <Card.Body className='type' style={{"fontSize": "12px", "padding": "10px"}}>{album.collect_type}</Card.Body>
                     </Card>
                 })}
 

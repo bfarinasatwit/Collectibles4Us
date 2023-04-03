@@ -15,8 +15,8 @@ const AddCard = ({ onClick }) => {
             onClick={onClick}
             style={{
                 cursor: 'pointer',
-                width: "180px",
-                height: "240px",
+                width: "120px",
+                height: "180px",
                 margin: "auto"
             }}
         >
@@ -24,12 +24,12 @@ const AddCard = ({ onClick }) => {
             <Card.Img
                 src={require("../pictures/edit.png")}
                 style={{
-                    height: "60%",
+                    height: "50%",
                     objectFit: "contain",
                     objectPosition: "center"
                 }}
             />
-            <Card.Title>Add Collections Here!</Card.Title>
+            <Card.Title style={{"fontSize": "16px"}}>Add Collections Here!</Card.Title>
         </Card>
     );
 };

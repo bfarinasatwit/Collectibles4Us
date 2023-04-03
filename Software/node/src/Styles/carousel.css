@@ -1,9 +1,10 @@
-.carousel-container{
-    width: 48%;
+.carousel-container {
+    width: 36%;
     min-width: 720px;
-    margin-right:auto;
+    margin-right: auto;
 }
+
 .add-card:hover {
     background-color: #888888 !important;
     cursor: pointer;
-  }
+}

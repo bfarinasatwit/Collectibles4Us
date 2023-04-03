@@ -35,7 +35,7 @@ const HomePage = () => {
             </div>
             <div style={{"display": "flex"}}>
                 <CarouselComponent albumData={albumData} userData={location.state} />
-                <div style={{"width": "40%"}}>
+                <div style={{"width": "80%"}}>
                     
                 </div>
             </div>
