@@ -78,6 +78,8 @@ const CollectionForm = (props) => {
               //log the information that was sent from the fetch can be used for trouble shooting
               console.log(data);
               setNewAlbumData({}); // clear new album data after image upload
+              //reload page after successful input of image and information
+              window.location.reload()
             } catch (error) {
               console.error(JSON.stringify(error));
             }
