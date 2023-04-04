@@ -43,7 +43,8 @@ const AlbumImage = (props) => {
         style={{
             height: "50%",
             objectFit: "contain",
-            objectPosition: "center"
+            objectPosition: "center",
+            marginBottom: "20px",
         }} />
     )
 }

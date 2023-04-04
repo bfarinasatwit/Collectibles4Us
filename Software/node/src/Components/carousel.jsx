@@ -6,8 +6,9 @@ import Card from 'react-bootstrap/Card'
 import AddCard from './AddCard'
 import CollectionForm from './CollectionForm'
 import AlbumImage from './AlbumImage'
+import Collection from './Collection';
 
-const CarouselComponent = ({ albumData, userData }) => {
+const CarouselComponent = ({ albumData, userData, selectStateChange, selectState }) => {
     const [show, setShow] = useState(false);
     const handleShow = () => {
         setShow(true);
@@ -54,20 +55,20 @@ const CarouselComponent = ({ albumData, userData }) => {
                 {albumData.map(album => {
                     {/**Creation of each div happens here*/ }
                     return <Card
+                        onClick={() => selectStateChange(album.album_id)}
                         className='shadow'
                         style={{
                             width: "120px",
                             height: "180px",
                             margin: "auto"
-
                         }}
                     >
                         {/**Not important just used for TS */}
                         {/* {console.log(album.album_id)} */}
                         {/**Image for each div: see AlbumImage */}
                         <AlbumImage id={album.album_id} />
-                        <Card.Title style={{"fontSize": "16px"}}>{album.album_name}</Card.Title>
-                        <Card.Body className='type' style={{"fontSize": "12px", "padding": "10px"}}>{album.collect_type}</Card.Body>
+                        <Card.Title style={{ "fontSize": "16px" }}>{album.album_name}</Card.Title>
+                        <Card.Body className='type' style={{ "fontSize": "12px", "padding": "10px" }}>{album.collect_type}</Card.Body>
                     </Card>
                 })}
 
@@ -81,6 +82,9 @@ const CarouselComponent = ({ albumData, userData }) => {
 
                 <AddCard className="add-card" onClick={handleShow} />
             </Carousel>
+
+            {/* Here goes the collectibles */}
+            <Collection uData={albumData} albumId={selectState}/>
 
             <CollectionForm showModal={show} onEsc={handleHide} userData={userData} />
         </>
