@@ -22,7 +22,7 @@ const Collection = ({ id, albumData }) => {
 
     return (
         <div className="collectible-grid">
-            {collectibleDivs}
+            {/* {collectibleDivs} */}
         </div>
     )
 }
