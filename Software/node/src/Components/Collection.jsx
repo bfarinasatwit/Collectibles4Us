@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card'
+import "../Styles/CollectibleGrid.css"
 
-const Collection = ({ uData, albumId }) => {
-    uData.map(album => {
-        if (album.album_id == albumId) {
-            album.collectibles.map(
-                collectible => {
-                    return <Card className="shadow"
-                        style={{
-                            width: "180px",
-                            height: "240px",
-                            margin: "auto"
+const Collection = ({ id, albumData }) => {
+    const [album, setAlbum] = useState({})
+    const [isCollection, setIsCollection] = useState(false)
 
-                        }} >
-                        <Card.Title>{collectible.collectible_name}</Card.Title>
-                        <Card.Body className='type'>{album.collect_type}</Card.Body>
-                    </Card>
-                }
-            )
+    useEffect(() => {
+        setAlbum(
+            albumData.find(obj => obj.album_id == id)
+        )
+    }, [id])
+
+    useEffect(() => {
+        if (album.collectibles) {
+            if (album.collectibles.length) {
+                setIsCollection(true)
+            }
         }
-    })
+    }, [album])
+
+    return (
+        <div className="collectible-grid">
+            {collectibleDivs}
+        </div>
+    )
 }
 
 export default Collection

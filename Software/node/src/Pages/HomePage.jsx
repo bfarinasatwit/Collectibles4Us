@@ -3,6 +3,7 @@ import CarouselComponent from '../Components/carousel'
 import AlbumEditor from "../Components/AlbumEditor";
 import { useLocation } from 'react-router-dom'
 import '../Styles/Header.css'
+import Collection from "../Components/Collection";
 
 const HomePage = () => {
     const location = useLocation();
@@ -35,7 +36,7 @@ const HomePage = () => {
 
     return (
         <>
-            {/* This is the header */}
+            {/* This is the header or top row */}
             <div className="Header">
                 <h1 style={{ color: 'white', marginRight: 'auto' }}>
                     Collectibles4Us
@@ -44,22 +45,27 @@ const HomePage = () => {
                     Welcome {location.state.firstName}!
                 </h1>
             </div>
-            {/* This contains the rest of the page */}
-            <div style={{ "display": "flex", "height": "300px"}}>
+            {/* This contains the middle row of the page */}
+            <div style={{ "display": "flex", "height": "300px" }}>
                 <CarouselComponent
                     albumData={albumData}
                     userData={location.state}
                     selectStateChange={changeSelection}
                     selectState={selectedAlbum} />
 
-                {/* Holds album image and actions */}
-                <div style={{ "width": "25%" }}>
-                    {selectedAlbum > 0 && <AlbumEditor id={selectedAlbum} albumData={albumData}/>}
-                </div>
                 {/* Holds collectible image and actions */}
                 <div style={{ "width": "25%" }}>
 
                 </div>
+                {/* Holds album image and actions */}
+                <div style={{ "width": "25%" }}>
+                    {selectedAlbum > 0 && <AlbumEditor id={selectedAlbum} albumData={albumData} />}
+                </div>
+
+            </div>
+
+            <div>
+                {selectedAlbum > 0 && <Collection id={selectedAlbum} albumData={albumData} />}
             </div>
         </>
     )

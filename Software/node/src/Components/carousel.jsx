@@ -83,9 +83,6 @@ const CarouselComponent = ({ albumData, userData, selectStateChange, selectState
                 <AddCard className="add-card" onClick={handleShow} />
             </Carousel>
 
-            {/* Here goes the collectibles */}
-            <Collection uData={albumData} albumId={selectState}/>
-
             <CollectionForm showModal={show} onEsc={handleHide} userData={userData} />
         </>
     )
