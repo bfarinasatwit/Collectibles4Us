@@ -20,76 +20,76 @@ const CollectionForm = (props) => {
     const [image, setImage] = useState(null)
     const [addAlbumError, setAddAlbumError] = useState('')
 
-    
+
     //function for both fetch calls, is ran after the form is submitted
     const handleCreate = (event) => {
         event.preventDefault()
 
         //fetch to put the album data into the sql database
-          const addAlbum = async () => {
+        const addAlbum = async () => {
             try {
-              const response = await fetch("http://localhost:3300/index.php/home/newAlbum", {
-                method: "PUT",
-                mode: "cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  album_name: name,
-                  collect_type: type,
-                  user_id: props.userData.user_id,
-                }),
-              });
-              if (!response.ok) {
-                throw new Error("Failed to create new album");
-              }
-              //gets the response from the fetch which is the new row created in the albums table
-              const data = await response.json();
-              //logs data just to ts
-              console.log(data[0]);
-              //sets the album data
-              setNewAlbumData(data[0]);
-              await addImage(data[0].album_id); // pass in the album ID to addImage
+                const response = await fetch("http://localhost:3300/index.php/home/newAlbum", {
+                    method: "PUT",
+                    mode: "cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        album_name: name,
+                        collect_type: type,
+                        user_id: props.userData.user_id,
+                    }),
+                });
+                if (!response.ok) {
+                    throw new Error("Failed to create new album");
+                }
+                //gets the response from the fetch which is the new row created in the albums table
+                const data = await response.json();
+                //logs data just to ts
+                console.log(data[0]);
+                //sets the album data
+                setNewAlbumData(data[0]);
+                await addImage(data[0].album_id); // pass in the album ID to addImage
             } catch (error) {
-              console.error(error);
+                console.error(error);
             }
-          };
-          addAlbum()
-          //function used to upload the image to the apache server
-          const addImage = async (albumId) => {
+        };
+        addAlbum()
+        //function used to upload the image to the apache server
+        const addImage = async (albumId) => {
             try {
                 //logs used to check that the data is correct
-              console.log(albumId);
-              console.log(image)
-              //creates a form and appends the key with the data
-              const formData = new FormData();
-              formData.append('image', image);
-              formData.append('album_id', albumId);
-          
-              const response = await fetch("http://localhost:3300/index.php/home/uploadAlbumImage", {
-                method: 'POST',
-                mode: 'cors',
-                body: formData
-              });
-          
-              if (!response.ok) {
-                throw new Error("Failed to upload image");
-              }
-          
-              const data = await response.json();
-              //log the information that was sent from the fetch can be used for trouble shooting
-              console.log(data);
-              setNewAlbumData({}); // clear new album data after image upload
-              //reload page after successful input of image and information
-              window.location.reload()
-            } catch (error) {
-              console.error(JSON.stringify(error));
-            }
-          }
-    
-        
-    }
- 
+                console.log(albumId);
+                console.log(image)
+                //creates a form and appends the key with the data
+                const formData = new FormData();
+                formData.append('image', image);
+                formData.append('album_id', albumId);
 
-    
+                const response = await fetch("http://localhost:3300/index.php/home/uploadAlbumImage", {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to upload image");
+                }
+
+                const data = await response.json();
+                //log the information that was sent from the fetch can be used for trouble shooting
+                console.log(data);
+                setNewAlbumData({}); // clear new album data after image upload
+                //reload page after successful input of image and information
+                window.location.reload()
+            } catch (error) {
+                console.error(JSON.stringify(error));
+            }
+        }
+
+
+    }
+
+
+
 
 
     return (

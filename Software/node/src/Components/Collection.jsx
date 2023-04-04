@@ -16,13 +16,23 @@ const Collection = ({ id, albumData }) => {
         if (album.collectibles) {
             if (album.collectibles.length) {
                 setIsCollection(true)
+            } else {
+                setIsCollection(false)
             }
+        } else {
+            setIsCollection(false)
         }
     }, [album])
 
     return (
         <div className="collectible-grid">
-            {/* {collectibleDivs} */}
+            {isCollection && album.collectibles.map(
+                collectible => (
+                    <Card className="shadow" style={{padding: "10px", margin: "20px"}}>
+                        <Card.Title>{collectible.collectible_name}</Card.Title>
+                    </Card>
+                )
+            )}
         </div>
     )
 }
