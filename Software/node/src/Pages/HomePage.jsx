@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CarouselComponent from '../Components/Carousel'
-import AlbumEditor from "../Components/AlbumEditor";
+import AlbumPanel from "../Components/AlbumPanel";
 import { useLocation } from 'react-router-dom'
 import '../Styles/Header.css'
 import Collection from "../Components/Collection";
@@ -58,7 +58,7 @@ const HomePage = () => {
                 </div>
                 {/* Holds album image and actions */}
                 <div style={{ "width": "25%" }}>
-                    {selectedAlbum > 0 && <AlbumEditor id={selectedAlbum} albumData={albumData} />}
+                    {selectedAlbum > 0 && <AlbumPanel id={selectedAlbum} albumData={albumData} />}
                 </div>
 
             </div>
