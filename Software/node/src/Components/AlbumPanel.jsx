@@ -11,6 +11,7 @@ const AlbumEditor = (props) => {
     const [showEdit, setShowEdit] = useState(false)
     const [album, setAlbum] = useState({})
 
+    // this sets the album to the one selected out of all the albums in the list
     useEffect(() => {
         setAlbum(
             props.albumData.find(obj => obj.album_id == props.id)

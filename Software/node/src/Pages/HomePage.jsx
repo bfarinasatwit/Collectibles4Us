@@ -62,7 +62,7 @@ const HomePage = () => {
                 </div>
 
             </div>
-
+            {/* Bottom of the page, contains the collectibles in the selected collection */}
             <div>
                 {selectedAlbum > 0 && <Collection id={selectedAlbum} albumData={albumData} />}
             </div>
