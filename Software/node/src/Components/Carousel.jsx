@@ -6,9 +6,8 @@ import Card from 'react-bootstrap/Card'
 import AddCard from './AddCard'
 import CollectionForm from './CollectionForm'
 import AlbumImage from './AlbumImage'
-import Collection from './Collection';
 
-const CarouselComponent = ({ albumData, userData, selectStateChange, selectState }) => {
+const CarouselComponent = ({ albumData, userData, selectStateChange }) => {
     const [show, setShow] = useState(false);
     const handleShow = () => {
         setShow(true);

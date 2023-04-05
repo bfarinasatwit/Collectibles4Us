@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CarouselComponent from '../Components/carousel'
+import CarouselComponent from '../Components/Carousel'
 import AlbumEditor from "../Components/AlbumEditor";
 import { useLocation } from 'react-router-dom'
 import '../Styles/Header.css'
@@ -46,12 +46,11 @@ const HomePage = () => {
                 </h1>
             </div>
             {/* This contains the middle row of the page */}
-            <div style={{ "display": "flex", "height": "300px" }}>
+            <div style={{ "display": "flex", "height": "320px" }}>
                 <CarouselComponent
                     albumData={albumData}
                     userData={location.state}
-                    selectStateChange={changeSelection}
-                    selectState={selectedAlbum} />
+                    selectStateChange={changeSelection} />
 
                 {/* Holds collectible image and actions */}
                 <div style={{ "width": "25%" }}>
