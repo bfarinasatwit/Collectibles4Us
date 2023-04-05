@@ -10,6 +10,8 @@ const AlbumEditForm = ({ album, show, handleHide }) => {
     const [name, setName] = useState('')
     const [type, setType] = useState('')
 
+    // Jon, see if you can get an error here where it says
+    // 'album_id' is not able to be accessed on an undefined 'album'
     useEffect(() => {
         if (album.album_id) {
             setIsAlbum(true)
@@ -20,10 +22,13 @@ const AlbumEditForm = ({ album, show, handleHide }) => {
 
     const handleApply = (event) => {
         event.preventDefault()
+        // if the fields have not been changed
         if (album.collect_type === '' && album.album_name === '') {
             
+        // if the fields have been changed, but still match the original value
         } else if (album.collect_type === type && album.album_name === name) {
 
+        // else 
         } else {
 
         }
