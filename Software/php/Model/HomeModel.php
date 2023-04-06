@@ -36,6 +36,11 @@ class HomeModel extends Database
             
         return $this->select("SELECT * FROM albums WHERE album_id = (SELECT MAX(album_id) FROM albums)");
     }
+    public function newCollectible($collectible_name, $year_created, $manufacturer, $c_condition, $graded, $album_id){
+        $this->insert("INSERT INTO collectibles (collectible_name, year_created, manufacturer, c_condition, graded, album_id) VALUES
+        (?,?,?,?,?,?)", ['sssisi', $collectible_name, $year_created, $manufacturer, $c_condition, $graded, $album_id]);
+        return $this->select("SELECT * FROM collectibles WHERE collectible_id = (SELECT MAX(collectible_id) FROM collectibles)");
+    }
 }
 
 ?>

@@ -26,7 +26,6 @@ values ('Baseball!', 'Sports', 1), ('Basketball!', 'Sports', 1), ('Sports!', 'Sp
 CREATE TABLE collectibles(
     collectible_id int NOT NULL AUTO_INCREMENT,
     collectible_name varchar(255) NOT NULL,
-    c_pic varchar(255),
     year_created int,
     manufacturer varchar(255),
     c_condition int,

@@ -107,9 +107,9 @@ class HomeController extends BaseController
                 $postage = json_decode(file_get_contents('php://input'), true);
 
                 if (isset($postage['album_name']) && isset($postage['collect_type']) && isset($postage['user_id'])) {
-                        $album_name = $postage['album_name'];
-                        $collect_type = $postage['collect_type'];
-                        $user_id = $postage['user_id'];
+                    $album_name = $postage['album_name'];
+                    $collect_type = $postage['collect_type'];
+                    $user_id = $postage['user_id'];
                 } else {
                     throw new Exception("Server error: not enough data sent. (album_name, collect_type, user_id)\n");
                 }
@@ -245,6 +245,169 @@ class HomeController extends BaseController
             );
         }
     }
+
+
+    public function newCollectibleAction()
+    {
+        // populated with errors, returns zero if no errors
+        $strErrorDesc = '';
+        // gets request method
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+        if (strtoupper($requestMethod) == 'PUT') {
+            try {
+                $newCollectibleModel = new HomeModel();
+                // turns string input into a json object as an associative array
+                $postage = json_decode(file_get_contents('php://input'), true);
+
+                if (isset($postage['collectible_name']) && isset($postage['year']) && isset($postage['manufacturer']) && isset($postage['condition']) && isset($postage['grade']) && isset($postage['album_id'])) {
+                    $collectible_name = $postage['collectible_name'];
+                    $year = $postage['year'];
+                    $manufacturer = $postage['manufacturer'];
+                    $condition = $postage['condition'];
+                    $grade = $postage['grade'];
+                    $album_id = $postage['album_id'];
+                } else {
+                    throw new Exception("Server error: not enough data sent. (collectible_name, year, manufacturer, condition, grade, album_id)\n");
+                }
+                
+                $response_data = $newCollectibleModel->newCollectible($collectible_name, $year, $manufacturer, $condition, $grade, $album_id);
+
+            } catch (Exception $e) {
+                // any caught exceptions will still be formatted to be send to an endpoint
+                // this is WIP and we need to encompass more errors. Ex. Database connection error
+                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else { // wrong method, not GET
+            $strErrorDesc = 'Method not supported';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+
+        // with errors
+        if ($strErrorDesc) {
+            $this->sendOutput(
+                json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+            // with no errors
+        } else {
+            $this->sendOutput(
+                json_encode($response_data),
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+            );
+        }
+    }
+
+
+    /**
+     * This function expects an http post to be made to it
+     * with keys image and collectible_id
+     */
+    public function uploadCollectibleImageAction()
+    {
+        // populated with errors, returns zero if no errors
+        $strErrorDesc = '';
+        // gets request method
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+
+
+        if (strtoupper($requestMethod) == 'POST') {
+            try {
+                // turns string input into a json object as an associative array
+                if (isset($_FILES['image']) && isset($_POST['collectible_id'])) {
+                    $file = $_FILES['image'];
+                    $collectible_id = $_POST['collectible_id'];
+                    // Move the file to the server
+                    $filePath = './media/collectibles/image' . $collectible_id . '.jpg';
+                    move_uploaded_file($file['tmp_name'], $filePath);
+                } else {
+                    throw new Exception("Internal server error. ");
+                }
+            } catch (Exception $e) {
+                // any caught exceptions will still be formatted to be send to an endpoint
+                // this is WIP and we need to encompass more errors. Ex. Database connection error
+                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else { // wrong method, not GET
+            $strErrorDesc = 'Method not supported';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+
+        // with errors
+        if ($strErrorDesc) {
+            $this->sendOutput(
+                json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+            // with no errors
+        } else {
+            $this->sendOutput(
+                json_encode(array('uploaded' => $collectible_id, 'file_path' => $filePath)),
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+            );
+        }
+    }
+
+    /**
+     * gets the image for the desired collectible
+     * expects one param of the id of the collectible
+     */
+    public function getCollectibleImageAction()
+    {
+        // populated with errors, returns zero if no errors
+        $strErrorDesc = '';
+        // gets request method
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+        // brings query string params into an array
+        $arrQueryStringParams = $this->getQueryStringParams();
+
+        if (strtoupper($requestMethod) == 'GET') {
+            try {
+                if (isset($arrQueryStringParams['collectible_id'])) {
+                    $collectible_id = $arrQueryStringParams['collectible_id'];
+                } else {
+                    throw new Exception("No image id provided.\n");
+                }
+
+                $image = file_get_contents("./media/collectibles/image" . $collectible_id . ".jpg");
+
+                if (!$image) {
+                    throw new Exception("No jpg found with id " . $collectible_id);
+                }
+
+            } catch (Exception $e) {
+                // any caught exceptions will still be formatted to be send to an endpoint
+                // this is WIP and we need to encompass more errors. Ex. Database connection error
+                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else { // wrong method, not GET
+            $strErrorDesc = 'Method not supported';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+
+        // with errors
+        if ($strErrorDesc) {
+            $this->sendOutput(
+                json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+            // with no errors
+        } else {
+            $this->sendOutput(
+                $image,
+                array('Content-Type: image/jpeg', 'HTTP/1.1 200 OK')
+            );
+        }
+    }
 }
+
+
+
+
+
 
 ?>
