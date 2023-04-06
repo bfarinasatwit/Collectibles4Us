@@ -1,0 +1,154 @@
+import React, { useState } from 'react'
+import {
+    Form as BootForm,
+    Button as BootButton,
+    Modal as BootModal,
+    Col as Col,
+    Alert as BootAlert
+} from 'react-bootstrap'
+
+/**
+ * Author: Brodi Farinas 
+ * @param {*} props contains the album_id and the user_id
+ * @returns a form to be used in the carousel which uploads images to apache and the album information into the sql db
+ */
+const CollectibleForm = (props) => {
+    //variable initializations and useState set up
+    const [name, setName] = useState('')
+    const [image, setImage] = useState(null)
+    const [year, setYear] = useState(-1)
+    const [manufacturer, setManufacturer] = useState('')
+    const [condition, setCondition] = useState(-1)
+    const [grade, setGrade] = useState(-1)
+    const [addAlbumError, setAddAlbumError] = useState('')
+
+
+    //function for both fetch calls, is ran after the form is submitted
+    const handleCreate = (event) => {
+        event.preventDefault()
+
+        //***fetch to put the Collectible data into the sql database
+        const addCollectible = async () => {
+            try {
+                //REWRITE FETCH
+                const response = await fetch("http://localhost:3300/index.php/home/newAlbum", {
+                    method: "PUT",
+                    mode: "cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        album_name: name,
+                        collect_type: type,
+                        user_id: props.userData.user_id,
+                    }),
+                });
+                if (!response.ok) {
+                    throw new Error("Album name has already been used");
+                }
+                //gets the response from the fetch which is the new row created in the albums table
+                const data = await response.json();
+                //logs data just to ts
+                console.log(data[0]);
+                //sets the album data
+                
+                await addImage(data[0].album_id); // pass in the album ID to addImage
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        addCollectible()
+        //function used to upload the image to the apache server
+        const addImage = async (albumId) => {
+            try {
+                //logs used to check that the data is correct
+                console.log(albumId);
+                //log the collectible id
+                console.log()
+                console.log(image)
+                //creates a form and appends the key with the data
+                const formData = new FormData();
+                formData.append('image', image);
+                //THIS IS GOING TO HAVE TO BE THE COLLECTIBLE ID
+                formData.append('album_id', albumId);
+                //REWRITE FETCH
+                const response = await fetch("http://localhost:3300/index.php/home/uploadAlbumImage", {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to upload image");
+                }
+
+                const data = await response.json();
+                //log the information that was sent from the fetch can be used for trouble shooting
+                console.log(data);
+                
+                //reload page after successful input of image and information
+                window.location.reload()
+            } catch (error) {
+                console.error(JSON.stringify(error));
+            }
+        }
+
+
+    }
+
+
+
+
+
+    return (
+
+        //basic form to display necessary fields
+        //NEED TO ADD ALL THE INPUTS FOR A COLLECTIBLE
+        <BootModal show={props.showModal} onHide={props.onEsc} onEscapeKeyDown={props.onEsc} className="App" size="lg" aria-labelledby="example-modal-sizes-title-lg">
+
+            <BootModal.Header closeButton className='close-button'>
+                <BootModal.Title id="example-modal-sizes-title-lg">
+                    Add a New Collection
+                </BootModal.Title>
+            </BootModal.Header>
+
+            <BootForm style={{ "margin": "auto", "minWidth": "60%" }} onSubmit={handleCreate} encType="multipart/form-data">
+
+                <BootForm.Group as={Col}>
+                    {addAlbumError &&
+                        <BootAlert variant='danger' dismissible onClose={setAddAlbumError('')}>
+                            This album name has already been used.
+                        </BootAlert>}
+                </BootForm.Group>
+
+                <BootForm.Group as={Col}>
+                    <BootForm.Label>
+                        Enter a Thumbnail for your Collection
+                    </BootForm.Label>
+                    <BootForm.Control
+                        required
+                        type="file"
+                        //had issues here make sure that instead of event.target.value it is event.target.files[0]
+                        //value returns the path of the image we want the actual information of the file
+                        onChange={(event) => setImage(event.target.files[0])}
+                    />
+                </BootForm.Group>
+
+                <BootForm.Group as={Col}>
+                    <BootForm.Label>
+                        Enter Collection Name
+                    </BootForm.Label>
+                    <BootForm.Control
+                        required
+                        placeholder="Collection Name"
+                        onChange={(event) => setName(event.target.value)}
+                    />
+                    <BootForm.Control.Feedback type="invalid" />
+                </BootForm.Group>
+
+                <BootButton className="form-control" variant="dark" style={{ "marginTop": "0.5rem", "marginBottom": "6rem" }} type="submit"  >
+                    Submit
+                </BootButton>
+            </BootForm>
+        </BootModal>
+    )
+}
+export default CollectibleForm;
