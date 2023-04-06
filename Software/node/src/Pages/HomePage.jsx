@@ -4,6 +4,7 @@ import AlbumPanel from "../Components/AlbumPanel";
 import { useLocation } from 'react-router-dom'
 import '../Styles/Header.css'
 import Collection from "../Components/Collection";
+import CollectiblePanel from "../Components/CollectiblePanel";
 
 const HomePage = () => {
     const location = useLocation();
@@ -63,7 +64,11 @@ const HomePage = () => {
 
                 {/* Holds collectible image and actions */}
                 <div style={{ "width": "25%" }}>
-
+                    {selectedCollectible > 0 && <CollectiblePanel
+                        id={selectedCollectible}
+                        albumId={selectedAlbum}
+                        albumData={albumData}
+                    />}
                 </div>
                 {/* Holds album image and actions */}
                 <div style={{ "width": "25%" }}>
