@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card'
 import "../Styles/CollectibleGrid.css"
 
-const Collection = ({ id, albumData }) => {
+const Collection = ({ id, albumData, selectStateChange }) => {
     const [album, setAlbum] = useState({})
     const [isCollection, setIsCollection] = useState(false)
 
@@ -28,7 +28,11 @@ const Collection = ({ id, albumData }) => {
         <div className="collectible-grid">
             {isCollection && album.collectibles.map(
                 collectible => (
-                    <Card className="shadow" style={{padding: "10px", margin: "20px"}}>
+                    <Card
+                        onClick={() => selectStateChange(collectible.collectible_id)}
+                        className="shadow"
+                        style={{ padding: "10px", margin: "20px" }}>
+
                         <Card.Title>{collectible.collectible_name}</Card.Title>
                     </Card>
                 )

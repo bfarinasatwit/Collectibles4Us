@@ -1,8 +1,13 @@
 import React from "react";
+import {Card as BootCard} from 'react-bootstrap'
 
 const CollectiblePanel = () => {
     return (
-        0
+        <div style={{"width": "160px"}}>
+            <BootCard>
+                
+            </BootCard>
+        </div>
     )
 }
 
