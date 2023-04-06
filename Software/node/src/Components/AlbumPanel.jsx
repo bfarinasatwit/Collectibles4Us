@@ -6,7 +6,7 @@ import {
 import AlbumImage from "./AlbumImage";
 import AlbumEditForm from "./AlbumEditForm";
 
-const AlbumEditor = (props) => {
+const AlbumEditor = ({ albumData, id }) => {
 
     const [showEdit, setShowEdit] = useState(false)
     const [album, setAlbum] = useState({})
@@ -14,15 +14,15 @@ const AlbumEditor = (props) => {
     // this sets the album to the one selected out of all the albums in the list
     useEffect(() => {
         setAlbum(
-            props.albumData.find(obj => obj.album_id == props.id)
+            albumData.find(obj => obj.album_id == id)
         )
-    }, [props.id])
+    }, [id])
 
     return (
         <>
             <div style={{ "width": "160px", "margin": "auto", "paddingTop": "20px" }}>
                 <BootCard className="shadow" style={{ "height": "240px" }}>
-                    <AlbumImage id={props.id} />
+                    <AlbumImage id={id} />
                     <BootCard.Title style={{ "fontSize": "16px" }}>{album.album_name}</BootCard.Title>
                     <BootCard.Body className='type' style={{ "fontSize": "16px", "padding": "10px" }}>{album.collect_type}</BootCard.Body>
                 </BootCard>
@@ -35,7 +35,7 @@ const AlbumEditor = (props) => {
                     </BootButton>
                 </div>
             </div>
-            <AlbumEditForm album={album} show={showEdit} handleHide={() => setShowEdit(false)}/>
+            <AlbumEditForm album={album} show={showEdit} handleHide={() => setShowEdit(false)} />
         </>
     )
 
