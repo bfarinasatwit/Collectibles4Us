@@ -16,6 +16,11 @@ const CollectiblePanel = ({ id, albumId, albumData }) => {
             <BootCard style={{ "height": "240px" }}>
                 <CollectibleImage />
                 <BootCard.Title>{collectible.collectible_name}</BootCard.Title>
+                <BootCard.Body>
+                    Year: {collectible.year_created}
+                    Manufacturer: {collectible.manufacturer}
+                    Grade: {collectible.graded}
+                </BootCard.Body>
             </BootCard>
         </div>
     )
