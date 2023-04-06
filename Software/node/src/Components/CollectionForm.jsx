@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     Form as BootForm,
     Button as BootButton,
@@ -16,7 +16,6 @@ const CollectionForm = (props) => {
     //variable initializations and useState set up
     const [name, setName] = useState('')
     const [type, setType] = useState('')
-    const [newAlbumData, setNewAlbumData] = useState({})
     const [image, setImage] = useState(null)
     const [addAlbumError, setAddAlbumError] = useState('')
 
@@ -39,14 +38,14 @@ const CollectionForm = (props) => {
                     }),
                 });
                 if (!response.ok) {
-                    throw new Error("Failed to create new album");
+                    throw new Error("Album name has already been used");
                 }
                 //gets the response from the fetch which is the new row created in the albums table
                 const data = await response.json();
                 //logs data just to ts
                 console.log(data[0]);
                 //sets the album data
-                setNewAlbumData(data[0]);
+                
                 await addImage(data[0].album_id); // pass in the album ID to addImage
             } catch (error) {
                 console.error(error);
@@ -77,7 +76,7 @@ const CollectionForm = (props) => {
                 const data = await response.json();
                 //log the information that was sent from the fetch can be used for trouble shooting
                 console.log(data);
-                setNewAlbumData({}); // clear new album data after image upload
+                
                 //reload page after successful input of image and information
                 window.location.reload()
             } catch (error) {
