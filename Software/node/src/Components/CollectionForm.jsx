@@ -193,4 +193,4 @@ const CollectionForm = (props) => {
         </BootModal>
     )
 }
-export default CollectionForm;
+export default CollectionForm; 
