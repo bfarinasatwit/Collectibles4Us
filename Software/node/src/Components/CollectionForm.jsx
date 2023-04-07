@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Form as BootForm,
     Button as BootButton,
@@ -16,14 +16,48 @@ const CollectionForm = (props) => {
     //variable initializations and useState set up
     const [name, setName] = useState('')
     const [type, setType] = useState('')
+    const [newAlbumData, setNewAlbumData] = useState({})
     const [image, setImage] = useState(null)
     const [addAlbumError, setAddAlbumError] = useState('')
+    const [validated, setValidated] = useState(false)
+    const [imageName, setImageName] = useState('')
+    const [addImageError, setImageError] = useState("Please Enter a File")
+    const [typeError, setTypeError] = useState("Please enter an album Name")
+    const [nameError, setNameError] = useState("Please enter an album type")
 
+
+    function checkValidity(){
+        if (!((imageName.substring(imageName.length -4).toLowerCase().includes(".png")) || imageName.substring(imageName.length - 4).toLowerCase().includes(".jpg"))){
+            console.log("please enter a valid file type")
+            setImageError("Please enter a .jpg or .png image");
+            setValidated(false)
+            return;
+
+        }
+
+        if (!(!!name)){
+            console.log("Missing album name")
+            setNameError("Please enter an album name")
+            setValidated(false)
+            return
+        }
+        if (!(!!type)){
+            console.log("Missing album type")
+            setTypeError("Please enter an album type")
+            setValidated(false)
+            return
+        }
+        setValidated(true)
+
+    }
 
     //function for both fetch calls, is ran after the form is submitted
     const handleCreate = (event) => {
         event.preventDefault()
+       
 
+        checkValidity()
+        if (validated == true){
         //fetch to put the album data into the sql database
         const addAlbum = async () => {
             try {
@@ -38,14 +72,15 @@ const CollectionForm = (props) => {
                     }),
                 });
                 if (!response.ok) {
-                    throw new Error("Album name has already been used");
+                    setAddAlbumError("That album name has already been used")
+                    throw new Error("That album name has already been used")
                 }
                 //gets the response from the fetch which is the new row created in the albums table
                 const data = await response.json();
                 //logs data just to ts
                 console.log(data[0]);
                 //sets the album data
-                
+                setNewAlbumData(data[0]);
                 await addImage(data[0].album_id); // pass in the album ID to addImage
             } catch (error) {
                 console.error(error);
@@ -76,13 +111,14 @@ const CollectionForm = (props) => {
                 const data = await response.json();
                 //log the information that was sent from the fetch can be used for trouble shooting
                 console.log(data);
-                
+                setNewAlbumData({}); // clear new album data after image upload
                 //reload page after successful input of image and information
                 window.location.reload()
             } catch (error) {
                 console.error(JSON.stringify(error));
             }
         }
+    }
 
 
     }
@@ -102,15 +138,7 @@ const CollectionForm = (props) => {
                 </BootModal.Title>
             </BootModal.Header>
 
-            <BootForm style={{ "margin": "auto", "minWidth": "60%" }} onSubmit={handleCreate} encType="multipart/form-data">
-
-                <BootForm.Group as={Col}>
-                    {addAlbumError &&
-                        <BootAlert variant='danger' dismissible onClose={setAddAlbumError('')}>
-                            This album name has already been used.
-                        </BootAlert>}
-                </BootForm.Group>
-
+            <BootForm noValidate style={{ "margin": "auto", "minWidth": "60%" }} onSubmit={handleCreate} encType="multipart/form-data">
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
                         Enter a Thumbnail for your Collection
@@ -120,31 +148,42 @@ const CollectionForm = (props) => {
                         type="file"
                         //had issues here make sure that instead of event.target.value it is event.target.files[0]
                         //value returns the path of the image we want the actual information of the file
-                        onChange={(event) => setImage(event.target.files[0])}
+                        onInput={(event) => {console.log(!(imageName.substring(imageName.lastIndexOf(".")+1)));if (event.target.files[0]) {setImage(event.target.files[0]);  setImageName(event.target.files[0].name); checkValidity()}}}
+                        isInvalid = {!((imageName.substring(imageName.length -4).toLowerCase().includes(".png")) || imageName.substring(imageName.length - 4).toLowerCase().includes(".jpg"))}
                     />
+                    <BootForm.Control.Feedback type = "invalid" style = {{"margin-bottom": "10px"}}>
+                        {addImageError}
+                    </BootForm.Control.Feedback>
                 </BootForm.Group>
 
-                <BootForm.Group as={Col}>
+                <BootForm.Group as={Col} style = {{"margin-bottom": "10px"}}>
                     <BootForm.Label>
                         Enter Collection Name
                     </BootForm.Label>
                     <BootForm.Control
                         required
                         placeholder="Collection Name"
-                        onChange={(event) => setName(event.target.value)}
+                        onChange={(event) => {setName(event.target.value)}}
+                        isInvalid = {!(!!name)}
                     />
-                    <BootForm.Control.Feedback type="invalid" />
+                    <BootForm.Control.Feedback type="invalid">
+                        {nameError}
+                    </BootForm.Control.Feedback>
                 </BootForm.Group>
-                <BootForm.Group as={Col}>
+
+                <BootForm.Group as={Col} style = {{"margin-bottom": "10px"}}>
                     <BootForm.Label>
                         Enter Collection Type
                     </BootForm.Label>
                     <BootForm.Control
                         required
                         placeholder="Collection Type"
-                        onChange={(event) => setType(event.target.value)}
+                        onChange={(event) => {setType(event.target.value)}}
+                        isInvalid = {!(!!type)}
                     />
-                    <BootForm.Control.Feedback type="invalid" />
+                    <BootForm.Control.Feedback type="invalid">
+                        {typeError}
+                    </BootForm.Control.Feedback>
                 </BootForm.Group>
 
                 <BootButton className="form-control" variant="dark" style={{ "marginTop": "0.5rem", "marginBottom": "6rem" }} type="submit"  >
