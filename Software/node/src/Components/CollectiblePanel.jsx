@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CollectibleImage from 'CollectibleImage'
+import CollectibleImage from './CollectibleImage'
 import { Card as BootCard } from 'react-bootstrap'
 
 const CollectiblePanel = ({ id, albumId, albumData }) => {

@@ -56,6 +56,43 @@ class Database
     }
 
     /**
+     * This function calls executestatement with the query 
+     * takes the result and returns it
+     * 
+     * This is meant to be used for deleting an album
+     * needs to be called after deleting all collectilbes
+     * from the album because of foreign key restraints in MySQL
+     * 
+     */
+    public function deleteAlbum($query = "", $params = []){
+        try {
+            $stmt = $this->executeStatement($query, $params);
+            $affectedRows = $stmt->affected_rows;
+            $stmt->close();
+            return $affectedRows;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * This function calls executestatement with the query 
+     * takes the result and returns it
+     * 
+     * This is meant to be used for deleting all
+     * of the collectibles inside a specified album
+     * 
+     */
+    public function deleteAlbumCollectible($query = "", $params = []){
+        try {
+            $stmt = $this->executeStatement($query, $params);
+            $stmt->close();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
      * This function uses the prepare and bind_param functions for mysqli
      * This ensures no code can be injected, rather than just using 
      * mysqli.query("string")

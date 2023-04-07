@@ -44,6 +44,22 @@ const HomePage = () => {
         loadPage()
     }, [])
 
+    //function to remove the album with the specified album_id
+    //as of right now also removes all collectibles that were inside of the album
+    const removeAlbum = async (id) => {
+        const response = await fetch("http://localhost:3300/index.php/home/deleteAlbum",
+            {
+                method: 'DELETE',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    album_id: id
+                })
+            }
+        )
+        window.location.reload()
+    }
+
     return (
         <>
             {/* This is the header or top row */}
@@ -74,7 +90,8 @@ const HomePage = () => {
                 <div style={{ "width": "25%" }}>
                     {selectedAlbum > 0 && <AlbumPanel
                         id={selectedAlbum}
-                        albumData={albumData} />}
+                        albumData={albumData} 
+                        handleRemoveAlbum = {removeAlbum}/>}
                 </div>
 
             </div>

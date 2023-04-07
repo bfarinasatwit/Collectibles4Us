@@ -36,10 +36,23 @@ class HomeModel extends Database
             
         return $this->select("SELECT * FROM albums WHERE album_id = (SELECT MAX(album_id) FROM albums)");
     }
-    public function newCollectible($collectible_name, $year_created, $manufacturer, $c_condition, $graded, $album_id){
+    public function newCollectible($collectible_name, $year_created, $manufacturer, $c_condition, $graded, $album_id)
+    {
         $this->insert("INSERT INTO collectibles (collectible_name, year_created, manufacturer, c_condition, graded, album_id) VALUES
         (?,?,?,?,?,?)", ['sssisi', $collectible_name, $year_created, $manufacturer, $c_condition, $graded, $album_id]);
         return $this->select("SELECT * FROM collectibles WHERE collectible_id = (SELECT MAX(collectible_id) FROM collectibles)");
+    }
+    //function deletes albums and all collectibles associated with it
+    public function removeAlbum($album_id)
+    {
+        if(!$this->select("SELECT * FROM albums WHERE album_id = ?" , ['i', $album_id])){
+            throw new Exception("Album with this album_id does not exist. \n");
+        }else{
+            //deletes collectibles
+            $this->deleteAlbumCollectible("DELETE FROM collectibles WHERE album_id = ?", ['i', $album_id]);
+            //deletes album
+           return $this->deleteAlbum("DELETE FROM albums WHERE album_id = ?" , ['i', $album_id]);
+        }
     }
 }
 

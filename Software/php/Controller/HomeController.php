@@ -141,7 +141,50 @@ class HomeController extends BaseController
             );
         }
     }
+    /** 
+     * Function to delete specified album
+     */
+    public function deleteAlbumAction()
+    {
 
+        // populated with errors, returns zero if no errors
+        $strErrorDesc = '';
+        // gets request method
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+        if(strtoupper($requestMethod) == 'DELETE'){
+            try{
+                $deleteAlbumModel = new HomeModel();
+                // turns input into a json object in an associative array
+                $postage = json_decode(file_get_contents('php://input'), true);
+                if(isset($postage['album_id'])){
+                    $album_id = $postage['album_id'];
+                }else {
+                    throw new Exception("Server error: not enough data sent. (album_id)\n");
+                }
+                $response_data = $deleteAlbumModel->removeAlbum($album_id);
+            }catch (Exception $e) {
+                // any caught exceptions will still be formatted to be send to an endpoint
+                // this is WIP and we need to encompass more errors. Ex. Database connection error
+                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        }else { // wrong method, not DELETE
+            $strErrorDesc = 'Method not supported';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+         // with errors
+         if ($strErrorDesc) {
+            $this->sendOutput(
+                json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+        }else{
+            $this->sendOutput(
+                json_encode($response_data),
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+            );
+        }
+    }
     /**
      * This function expects an http post to be made to it
      * with keys image and image_index
@@ -270,7 +313,7 @@ class HomeController extends BaseController
                 } else {
                     throw new Exception("Server error: not enough data sent. (collectible_name, year, manufacturer, condition, grade, album_id)\n");
                 }
-                
+
                 $response_data = $newCollectibleModel->newCollectible($collectible_name, $year, $manufacturer, $condition, $grade, $album_id);
 
             } catch (Exception $e) {

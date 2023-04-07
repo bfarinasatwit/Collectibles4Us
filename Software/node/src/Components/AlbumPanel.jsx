@@ -6,7 +6,7 @@ import {
 import AlbumImage from "./AlbumImage";
 import AlbumEditForm from "./AlbumEditForm";
 
-const AlbumEditor = ({ albumData, id }) => {
+const AlbumEditor = ({ albumData, id, handleRemoveAlbum }) => {
 
     const [showEdit, setShowEdit] = useState(false)
     const [album, setAlbum] = useState({})
@@ -17,6 +17,7 @@ const AlbumEditor = ({ albumData, id }) => {
             albumData.find(obj => obj.album_id == id)
         )
     }, [id])
+    
 
     return (
         <>
@@ -27,7 +28,8 @@ const AlbumEditor = ({ albumData, id }) => {
                     <BootCard.Body className='type' style={{ "fontSize": "16px", "padding": "10px" }}>{album.collect_type}</BootCard.Body>
                 </BootCard>
                 <div style={{ "display": "flex", "justifyContent": "center" }}>
-                    <BootButton variant="dark" style={{ "margin": "8px", "fontSize": "12px" }}>
+                    {/**remove album is inside of HomePage.jsx */}
+                    <BootButton variant="dark" onClick={() => handleRemoveAlbum(id)} style={{ "margin": "8px", "fontSize": "12px" }}>
                         Remove
                     </BootButton>
                     <BootButton onClick={() => setShowEdit(true)} variant="dark" style={{ "margin": "8px", "fontSize": "12px" }}>
