@@ -9,7 +9,7 @@ import {
 
 /**
  * Author: Brodi Farinas 
- * @param {*} props contains the album_id and the user_id
+ * @param {*} props contains the album_id
  * @returns a form to be used in the carousel which uploads images to apache and the album information into the sql db
  */
 const CollectibleForm = (props) => {
@@ -30,15 +30,17 @@ const CollectibleForm = (props) => {
         //***fetch to put the Collectible data into the sql database
         const addCollectible = async () => {
             try {
-                //REWRITE FETCH
-                const response = await fetch("http://localhost:3300/index.php/home/newAlbum", {
+                const response = await fetch("http://localhost:3300/index.php/home/newCollectible", {
                     method: "PUT",
                     mode: "cors",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        album_name: name,
-                        collect_type: type,
-                        user_id: props.userData.user_id,
+                        collectible_name: name,
+                        year: year,
+                        manufacturer: manufacturer,
+                        condition: condition,
+                        grade: grade,
+                        album_id: props.userData.album_id,
                     }),
                 });
                 if (!response.ok) {
@@ -49,26 +51,24 @@ const CollectibleForm = (props) => {
                 //logs data just to ts
                 console.log(data[0]);
                 //sets the album data
-                
-                await addImage(data[0].album_id); // pass in the album ID to addImage
+
+                await addImage(data[0].collectible_id); // pass in the album ID to addImage
             } catch (error) {
                 console.error(error);
             }
         };
         addCollectible()
         //function used to upload the image to the apache server
-        const addImage = async (albumId) => {
+        const addImage = async (collectibleId) => {
             try {
                 //logs used to check that the data is correct
-                console.log(albumId);
-                //log the collectible id
-                console.log()
+                console.log(collectibleId);
                 console.log(image)
                 //creates a form and appends the key with the data
                 const formData = new FormData();
                 formData.append('image', image);
                 //THIS IS GOING TO HAVE TO BE THE COLLECTIBLE ID
-                formData.append('album_id', albumId);
+                formData.append('collectible_id', collectibleId);
                 //REWRITE FETCH
                 const response = await fetch("http://localhost:3300/index.php/home/uploadAlbumImage", {
                     method: 'POST',
@@ -83,17 +83,15 @@ const CollectibleForm = (props) => {
                 const data = await response.json();
                 //log the information that was sent from the fetch can be used for trouble shooting
                 console.log(data);
-                
+
                 //reload page after successful input of image and information
                 window.location.reload()
             } catch (error) {
                 console.error(JSON.stringify(error));
             }
         }
-
-
     }
-
+z
 
 
 
@@ -121,7 +119,7 @@ const CollectibleForm = (props) => {
 
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
-                        Enter a Thumbnail for your Collection
+                        Enter a Photo of Your Collectible
                     </BootForm.Label>
                     <BootForm.Control
                         required
@@ -134,7 +132,7 @@ const CollectibleForm = (props) => {
 
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
-                        Enter Collection Name
+                        Enter the Name of the Collectible
                     </BootForm.Label>
                     <BootForm.Control
                         required
@@ -142,6 +140,61 @@ const CollectibleForm = (props) => {
                         onChange={(event) => setName(event.target.value)}
                     />
                     <BootForm.Control.Feedback type="invalid" />
+                </BootForm.Group>
+
+                <BootForm.Group as={Col}>
+                    <BootForm.Label>
+                        Enter the year the collectible was produced
+                    </BootForm.Label>
+                    <BootForm.Control
+                        required
+                        placeholder="YYYY"
+                        onChange={(event) => setYear(event.target.value)}
+                    />
+                    <BootForm.Control.Feedback type="invalid" />
+                </BootForm.Group>
+
+                <BootForm.Group as={Col}>
+                    <BootForm.Label>
+                        Enter the Manufacturer of the Collectible
+                    </BootForm.Label>
+                    <BootForm.Control
+                        required
+                        placeholder="Manufacturer"
+                        onChange={(event) => setManufacturer(event.target.value)}
+                    />
+                    <BootForm.Control.Feedback type="invalid" />
+                </BootForm.Group>
+
+                <BootForm.Group as={Col}>
+                    <BootForm.Select
+                        required
+                        onChange={(event) => setCondition(event.target.value)}
+                    />
+                    <option value="-1" hidden>Select a Condition for Your Collectible</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <BootForm.Select.Feedback type="invalid" />
+                </BootForm.Group>
+
+                <BootForm.Group as={Col}>
+                    <BootForm.Select
+                        required
+                        onChange={(event) => setGrade(event.target.value)}
+                    />
+                    <option value="-1" hidden>Select if Your Collectible is Graded</option>
+                    <option value="Graded">Graded</option>
+                    <option value="Not Graded">Not Graded</option>
+                    <BootForm.Select.Feedback type="invalid" />
                 </BootForm.Group>
 
                 <BootButton className="form-control" variant="dark" style={{ "marginTop": "0.5rem", "marginBottom": "6rem" }} type="submit"  >
