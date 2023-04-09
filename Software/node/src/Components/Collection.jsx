@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card'
 import "../Styles/CollectibleGrid.css"
+import CollectibleForm from "./CollectibleForm"
+import AddCollectible from "./AddCollectible";
 
 const Collection = ({ id, albumData, selectStateChange }) => {
     const [album, setAlbum] = useState({})
     const [isCollection, setIsCollection] = useState(false)
+    const [show, setShow] = useState(false);
+    const handleShow = () => {
+        setShow(true);
+    }
+    const handleHide = () => {
+        setShow(false);
+    }
 
     useEffect(() => {
         setAlbum(
@@ -24,6 +33,8 @@ const Collection = ({ id, albumData, selectStateChange }) => {
         }
     }, [album])
 
+    //add handle show
+
     return (
         <div className="collectible-grid">
             {isCollection && album.collectibles.map(
@@ -31,12 +42,19 @@ const Collection = ({ id, albumData, selectStateChange }) => {
                     <Card
                         onClick={() => selectStateChange(collectible.collectible_id)}
                         className="shadow"
-                        style={{ padding: "10px", margin: "20px" }}>
+                        style={{ padding: "10px", margin: "20px",width: "120px", cursor: 'pointer', }}>
 
                         <Card.Title>{collectible.collectible_name}</Card.Title>
+                        <Card.Body>
+                            {collectible.year_created}<br></br>
+                            {collectible.graded}<br></br>
+                            {collectible.c_condition}
+                        </Card.Body>
                     </Card>
                 )
             )}
+            <AddCollectible onClick={handleShow}/>
+            <CollectibleForm showModal = {show} albumData = {album} onEsc={handleHide}/>
         </div>
     )
 }
