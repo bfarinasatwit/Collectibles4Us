@@ -51,7 +51,7 @@ class HomeModel extends Database
             //deletes collectibles
             $this->deleteAlbumCollectible("DELETE FROM collectibles WHERE album_id = ?", ['i', $album_id]);
             //deletes album
-           return $this->deleteAlbum("DELETE FROM albums WHERE album_id = ?" , ['i', $album_id]);
+           return $this->delete("DELETE FROM albums WHERE album_id = ?" , ['i', $album_id]);
         }
     }
 }

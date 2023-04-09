@@ -64,7 +64,7 @@ class Database
      * from the album because of foreign key restraints in MySQL
      * 
      */
-    public function deleteAlbum($query = "", $params = []){
+    public function delete($query = "", $params = []){
         try {
             $stmt = $this->executeStatement($query, $params);
             $affectedRows = $stmt->affected_rows;
