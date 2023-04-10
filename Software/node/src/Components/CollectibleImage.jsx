@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from 'react-bootstrap/Card'
+import Card from'react-bootstrap/Card'
 
 const CollectibleImage = ({ id }) => {
     const [img, setImg] = useState(null)
@@ -35,10 +35,10 @@ const CollectibleImage = ({ id }) => {
 
     return (
         <Card.Img src={img} style={{
-            height: "50%",
-            objectFit: "contain",
-            objectPosition: "center",
-            marginBottom: "20px",
+            "height": "50%",
+            "objectFit": "contain",
+            "objectPosition": "center",
+            "marginBottom": "20px",
         }}/>
     )
 }
