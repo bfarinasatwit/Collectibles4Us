@@ -14,11 +14,13 @@ const CollectiblePanel = ({ id, albumId, albumData }) => {
     return (
         <div style={{ "width": "160px", "margin": "auto", "paddingTop": "20px" }}>
             <BootCard style={{ "height": "240px" }}>
-                <CollectibleImage />
+                <CollectibleImage id={id}/>
                 <BootCard.Title>{collectible.collectible_name}</BootCard.Title>
                 <BootCard.Body>
                     Year: {collectible.year_created}
+                    <br></br>
                     Manufacturer: {collectible.manufacturer}
+                    <br></br>
                     Grade: {collectible.graded}
                 </BootCard.Body>
             </BootCard>

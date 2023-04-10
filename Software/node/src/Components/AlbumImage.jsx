@@ -30,7 +30,7 @@ const AlbumImage = (props) => {
                 setimg(imgBlobURL);
                 
             } catch (error) {
-                console.error('Error fetching image:', error)
+                console.error('Error fetching image: ', error)
             }
         }
 
