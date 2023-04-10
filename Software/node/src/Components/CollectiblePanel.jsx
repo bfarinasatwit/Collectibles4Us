@@ -8,7 +8,7 @@ const CollectiblePanel = ({ id, albumId, albumData }) => {
 
     useEffect(()=> {
         const album = albumData.find(obj => obj.album_id === albumId)
-        setCollectible(album.find(obj => obj.collectible_id === id))
+        setCollectible(album.collectibles.find(obj => obj.collectible_id === id))
     }, [id])
 
     return (

@@ -36,7 +36,7 @@ const Collection = ({ id, albumData, selectStateChange }) => {
 
     return (
         <div className="collectible-grid">
-            {isCollection && album.collectibles.map(
+            {isCollection > 0 && album.collectibles.map(
                 collectible => (
                     <Card
                         onClick={() => selectStateChange(collectible.collectible_id)}
