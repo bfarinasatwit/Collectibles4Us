@@ -48,7 +48,7 @@ class HomeModel extends Database
         if(!$this->select("SELECT * FROM albums WHERE album_id = ?" , ['i', $album_id])){
             throw new Exception("Album with this album_id does not exist. \n");
         }else{
-            //deletes collectibles
+            //deletes collectibles inside of the desired albums
             $this->deleteAlbumCollectible("DELETE FROM collectibles WHERE album_id = ?", ['i', $album_id]);
             //deletes album
            return $this->delete("DELETE FROM albums WHERE album_id = ?" , ['i', $album_id]);

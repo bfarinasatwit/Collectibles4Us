@@ -9,7 +9,7 @@ import {
 
 /**
  * Author: Brodi Farinas 
- * @param {*} props contains the album
+ * @param {*} props contains albumData showModal and onEsc
  * @returns a form to be used in the carousel which uploads images to apache and the album information into the sql db
  */
 const CollectibleForm = (props) => {
@@ -20,7 +20,6 @@ const CollectibleForm = (props) => {
     const [manufacturer, setManufacturer] = useState('')
     const [condition, setCondition] = useState(-1)
     const [grade, setGrade] = useState(-1)
-    const [addCollectibleError, setAddCollectibleError] = useState('')
 
 
     //function for both fetch calls, is ran after the form is submitted
@@ -100,19 +99,11 @@ const CollectibleForm = (props) => {
 
             <BootModal.Header closeButton className='close-button'>
                 <BootModal.Title id="example-modal-sizes-title-lg">
-                    Add a New Collection
+                    Add a New Collectible
                 </BootModal.Title>
             </BootModal.Header>
 
             <BootForm style={{ "margin": "auto", "minWidth": "60%" }} onSubmit={handleCreate} encType="multipart/form-data">
-
-                <BootForm.Group as={Col}>
-                    {addCollectibleError &&
-                        <BootAlert variant='danger' dismissible onClose={setAddCollectibleError('')}>
-                            This album name has already been used.
-                        </BootAlert>}
-                </BootForm.Group>
-
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
                         Enter a Photo of Your Collectible
@@ -163,7 +154,7 @@ const CollectibleForm = (props) => {
                 </BootForm.Group>
 
 
-                <BootForm.Group as ={Col}>
+                <BootForm.Group as={Col}>
                     <BootForm.Label>
                         Select a Condition for Your Collectible
                     </BootForm.Label>
@@ -183,24 +174,18 @@ const CollectibleForm = (props) => {
                         <option value="10">10</option>
                     </BootForm.Select>
                 </BootForm.Group>
-                
+
                 <BootForm.Group as={Col}>
-                        <BootForm.Label>
+                    <BootForm.Label>
                         Select if Your Collectible is Graded
-                        </BootForm.Label>
-                        <BootForm.Select
-                            onChange={(event) => setGrade(event.target.value)}
-                        >
+                    </BootForm.Label>
+                    <BootForm.Select
+                        onChange={(event) => setGrade(event.target.value)}
+                    >
                         <option value="Graded">Graded</option>
                         <option value="Not Graded">Not Graded</option>
-                        </BootForm.Select>
+                    </BootForm.Select>
                 </BootForm.Group>
-
-                
-
-                    
-                
-
                 <BootButton className="form-control" variant="dark" style={{ "marginTop": "0.5rem", "marginBottom": "6rem" }} type="submit"  >
                     Submit
                 </BootButton>

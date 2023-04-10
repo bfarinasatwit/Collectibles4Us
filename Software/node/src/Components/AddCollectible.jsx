@@ -15,13 +15,13 @@ const AddCollectible = ({ onClick }) => {
             onClick={onClick}
             style={{
                 cursor: 'pointer',
-                width: "120px",
+                width: "150px",
                 padding: "10px",
                 margin: "20px",
                 margin: "auto"
             }}
         >
-            <Card.Title style={{"fontSize": "16px"}}>Add Collectibles Here!</Card.Title>
+            <Card.Body style={{ "fontSize": "16px" }}>Add Collectibles Here!</Card.Body>
         </Card>
     );
 };
