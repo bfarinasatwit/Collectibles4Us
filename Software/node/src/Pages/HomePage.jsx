@@ -72,20 +72,13 @@ const HomePage = () => {
                 </h1>
             </div>
             {/* This contains the middle row of the page */}
-            <div style={{ "display": "flex", "height": "320px" }}>
+            <div style={{ "display": "flex", "height": "400px" }}>
                 <CarouselComponent
                     albumData={albumData}
                     userData={location.state}
                     selectStateChange={changeAlbumSelection} />
-
-                {/* Holds collectible image and actions */}
-                <div style={{ "width": "25%" }}>
-                    {selectedCollectible > 0 && <CollectiblePanel
-                        id={selectedCollectible}
-                        albumId={selectedAlbum}
-                        albumData={albumData}
-                    />}
-                </div>
+            </div>
+            <div style={{ "display": "flex", "height": "320px" }}>
                 {/* Holds album image and actions */}
                 <div style={{ "width": "25%" }}>
                     {selectedAlbum > 0 && <AlbumPanel
@@ -93,8 +86,16 @@ const HomePage = () => {
                         albumData={albumData} 
                         handleRemoveAlbum = {removeAlbum}/>}
                 </div>
-
+                 {/* Holds collectible image and actions */}
+                 <div style={{ "width": "25%" }}>
+                    {selectedCollectible > 0 && <CollectiblePanel
+                        id={selectedCollectible}
+                        albumId={selectedAlbum}
+                        albumData={albumData}
+                    />}
+                </div>
             </div>
+
             {/* Bottom of the page, contains the collectibles in the selected collection */}
             <div>
                 {selectedAlbum > 0 && <Collection

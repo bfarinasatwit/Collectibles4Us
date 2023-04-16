@@ -43,9 +43,11 @@ const CarouselComponent = ({ albumData, userData, selectStateChange }) => {
                 ssr={true} // means to render carousel on server-side.
                 infinite={true} //wraps around
                 keyBoardControl={true}
-                customTransition="all .5"
                 focusOnSelect={false}
+                arrows={true}
+                renderDotsOutside={true}
                 transitionDuration={500}
+                draggable={false}
                 partialVisible={true} //shows partial visible items in the carousel
                 containerClass="carousel-container"
                 itemClass="carousel-item-padding-40-px"
@@ -57,8 +59,8 @@ const CarouselComponent = ({ albumData, userData, selectStateChange }) => {
                         onClick={() => selectStateChange(album.album_id)}
                         className='shadow'
                         style={{
-                            width: "120px",
-                            height: "180px",
+                            width: "270px",
+                            height: "360px",
                             margin: "auto"
                         }}
                     >
@@ -66,8 +68,9 @@ const CarouselComponent = ({ albumData, userData, selectStateChange }) => {
                         {/* {console.log(album.album_id)} */}
                         {/**Image for each div: see AlbumImage */}
                         <AlbumImage id={album.album_id} />
-                        <Card.Title style={{ "fontSize": "16px" }}>{album.album_name}</Card.Title>
-                        <Card.Body className='type' style={{ "fontSize": "12px", "padding": "10px" }}>{album.collect_type}</Card.Body>
+                        <Card.Title style={{ "fontSize": "32px" }}><strong>{album.album_name}</strong></Card.Title>
+                        <Card.Body className='type' style={{ "fontSize": "20px", "padding": "10px" }}>
+                            <strong>Collection Type:</strong><br></br> {album.collect_type}</Card.Body>
                     </Card>
                 })}
 

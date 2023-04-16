@@ -21,7 +21,8 @@ const AlbumEditor = ({ albumData, id, handleRemoveAlbum }) => {
 
     return (
         <>
-            <div style={{ "width": "160px", "margin": "auto", "paddingTop": "20px" }}>
+            <p>SELECTED COLLECTION</p>
+            <div style={{ "width": "160px", "margin": "auto", "paddingTop": "0px" }}>
                 <BootCard className="shadow" style={{ "height": "240px" }}>
                     <AlbumImage id={id} />
                     <BootCard.Title style={{ "fontSize": "16px" }}>{album.album_name}</BootCard.Title>

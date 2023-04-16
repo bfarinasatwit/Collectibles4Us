@@ -1,8 +1,9 @@
 .carousel-container {
-    width: 50%;
+    width: 75%;
     min-width: 600px;
     margin-right: auto;
-    padding-top: 2rem;
+    margin-left: auto;
+    padding-top: 4rem;
     padding-bottom: 2rem;
 }
 

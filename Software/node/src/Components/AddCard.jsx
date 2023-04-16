@@ -15,8 +15,8 @@ const AddCard = ({ onClick }) => {
             onClick={onClick}
             style={{
                 cursor: 'pointer',
-                width: "120px",
-                height: "180px",
+                width: "270px",
+                height: "360px",
                 margin: "auto"
             }}
         >
@@ -29,7 +29,7 @@ const AddCard = ({ onClick }) => {
                     objectPosition: "center"
                 }}
             />
-            <Card.Title style={{"fontSize": "16px"}}>Add Collections Here!</Card.Title>
+            <Card.Body style={{ "fontSize": "24px" }}><br></br>Add Collections Here!</Card.Body>
         </Card>
     );
 };
