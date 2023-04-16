@@ -148,8 +148,8 @@ const CollectionForm = (props) => {
                         type="file"
                         //had issues here make sure that instead of event.target.value it is event.target.files[0]
                         //value returns the path of the image we want the actual information of the file
-                        onInput={(event) => {console.log(!(imageName.substring(imageName.lastIndexOf(".")+1)));if (event.target.files[0]) {setImage(event.target.files[0]);  setImageName(event.target.files[0].name); checkValidity()}}}
-                        isInvalid = {!((imageName.substring(imageName.length -4).toLowerCase().includes(".png")) || imageName.substring(imageName.length - 4).toLowerCase().includes(".jpg"))}
+                        onInput={(event) => {if (event.target.files[0]) {setImage(event.target.files[0]);  setImageName(event.target.files[0].name); checkValidity()}}}
+                        isInvalid = {!(imageName.substring(imageName.length - 4).toLowerCase().includes(".jpg"))}
                     />
                     <BootForm.Control.Feedback type = "invalid" style = {{"margin-bottom": "10px"}}>
                         {addImageError}

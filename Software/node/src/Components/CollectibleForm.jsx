@@ -16,16 +16,50 @@ const CollectibleForm = (props) => {
     //variable initializations and useState set up
     const [name, setName] = useState('')
     const [image, setImage] = useState(null)
-    const [year, setYear] = useState(-1)
+    const [year, setYear] = useState('')
     const [manufacturer, setManufacturer] = useState('')
-    const [condition, setCondition] = useState(-1)
-    const [grade, setGrade] = useState(-1)
+    const [condition, setCondition] = useState("0")
+    const [grade, setGrade] = useState("Not Graded")
+    const [validated, setValidated] = useState(false)
+    const [addImageError, setImageError] = useState('Please Upload an Image')
+    const [imageName, setImageName] = useState('')
+    function checkValidity(){
+        if (!imageName.substring(imageName.length - 4).toLowerCase().includes(".jpg")){
+            setImageError("Invalid file type, please upload a .jpg")
+            console.log("invalid image")
+            setValidated(false)
+            return
+        }
+        if (!(!!name)){
+            console.log("invalid name")
 
+            setValidated(false)
+            return
+        }
+        if (!(!!manufacturer)){
+            console.log("invalid manu")
+
+            setValidated(false)
+            return
+        }
+        if (!/[0-9]{4}/.test(year)){
+            console.log("invalid year")
+
+            setValidated(false)
+            return
+        }
+
+        setValidated(true)
+
+    }
 
     //function for both fetch calls, is ran after the form is submitted
     const handleCreate = (event) => {
         event.preventDefault()
 
+
+        checkValidity()
+        if (validated){
         //***fetch to put the Collectible data into the sql database
         const addCollectible = async () => {
             try {
@@ -86,6 +120,7 @@ const CollectibleForm = (props) => {
             }
         }
     }
+}
 
 
 
@@ -111,10 +146,15 @@ const CollectibleForm = (props) => {
                     <BootForm.Control
                         required
                         type="file"
+                        accept = ".jpg"
                         //had issues here make sure that instead of event.target.value it is event.target.files[0]
                         //value returns the path of the image we want the actual information of the file
-                        onChange={(event) => setImage(event.target.files[0])}
+                        onChange={(event) => {if (event.target.files[0]) {setImage(event.target.files[0]);  setImageName(event.target.files[0].name); checkValidity()}}}
+                        isInvalid = {!(imageName.substring(imageName.length - 4).toLowerCase().includes(".jpg"))}
                     />
+                    <BootForm.Control.Feedback type = "invalid" style = {{"margin-bottom": "10px"}}>
+                        {addImageError}
+                    </BootForm.Control.Feedback>
                 </BootForm.Group>
 
                 <BootForm.Group as={Col}>
@@ -125,8 +165,11 @@ const CollectibleForm = (props) => {
                         required
                         placeholder="Collectible Name"
                         onChange={(event) => setName(event.target.value)}
+                        isInvalid = {!(!!name)}
                     />
-                    <BootForm.Control.Feedback type="invalid" />
+                    <BootForm.Control.Feedback type="invalid">
+                        Please Enter a Collection Name
+                    </BootForm.Control.Feedback>
                 </BootForm.Group>
 
                 <BootForm.Group as={Col}>
@@ -137,9 +180,12 @@ const CollectibleForm = (props) => {
                         required
                         placeholder="YYYY"
                         onChange={(event) => setYear(event.target.value)}
+                        isInvalid = {!/[0-9]{4}/.test(year)}
                     />
-                    <BootForm.Control.Feedback type="invalid" />
-                </BootForm.Group>
+                    <BootForm.Control.Feedback type="invalid">
+                        Please Enter a Valid Year
+                    </BootForm.Control.Feedback>             
+                    </BootForm.Group>
 
                 <BootForm.Group as={Col}>
                     <BootForm.Label>
@@ -149,8 +195,12 @@ const CollectibleForm = (props) => {
                         required
                         placeholder="Manufacturer"
                         onChange={(event) => setManufacturer(event.target.value)}
+                        isInvalid = {!(!!manufacturer.length)}
                     />
-                    <BootForm.Control.Feedback type="invalid" />
+                    <BootForm.Control.Feedback type="invalid">
+                        Please Enter a Manufacturer
+                    </BootForm.Control.Feedback>   
+                    
                 </BootForm.Group>
 
 
