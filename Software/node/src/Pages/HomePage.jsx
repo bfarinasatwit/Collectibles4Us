@@ -78,16 +78,16 @@ const HomePage = () => {
                     userData={location.state}
                     selectStateChange={changeAlbumSelection} />
             </div>
-            <div style={{ "display": "flex", "height": "320px" }}>
+            <div style={{ "display": "flex", "height": "320px"}}>
                 {/* Holds album image and actions */}
-                <div style={{ "width": "25%" }}>
+                <div style={{ "width": "50%" }}>
                     {selectedAlbum > 0 && <AlbumPanel
                         id={selectedAlbum}
                         albumData={albumData} 
                         handleRemoveAlbum = {removeAlbum}/>}
                 </div>
                  {/* Holds collectible image and actions */}
-                 <div style={{ "width": "25%" }}>
+                 <div style={{ "width": "50%" }}>
                     {selectedCollectible > 0 && <CollectiblePanel
                         id={selectedCollectible}
                         albumId={selectedAlbum}

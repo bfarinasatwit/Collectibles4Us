@@ -36,23 +36,26 @@ const Collection = ({ id, albumData, selectStateChange }) => {
 
     return (
         <div className="collectible-grid">
+            <AddCollectible onClick={handleShow} />
             {isCollection > 0 && album.collectibles.map(
                 collectible => (
                     <Card
                         onClick={() => selectStateChange(collectible.collectible_id)}
                         className="shadow"
-                        style={{ padding: "10px", margin: "20px", width: "150px", cursor: 'pointer', }}>
+                        style={{ padding: "10px", margin: "20px", width: "150px", cursor: 'pointer', height: '200px' }}>
 
                         <Card.Title>{collectible.collectible_name}</Card.Title>
                         <Card.Body>
-                            {"Year Created: " + collectible.year_created}<br></br>
+                            
+                            <div style={{fontSize: '15px'}}><strong>Year Created: </strong>{collectible.year_created}</div>
+                            <div style={{fontSize: '15px'}}><strong>Condition: </strong>{collectible.c_condition}</div>
                             {collectible.graded}<br></br>
-                            {"Condition: " + collectible.c_condition}
+                            
                         </Card.Body>
                     </Card>
                 )
             )}
-            <AddCollectible onClick={handleShow} />
+            
             <CollectibleForm showModal={show} albumData={album} onEsc={handleHide} />
         </div>
     )

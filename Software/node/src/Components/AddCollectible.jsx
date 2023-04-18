@@ -21,7 +21,7 @@ const AddCollectible = ({ onClick }) => {
                 margin: "auto"
             }}
         >
-            <Card.Body style={{ "fontSize": "16px" }}>Add Collectibles Here!</Card.Body>
+            <Card.Body style={{ "fontSize": "16px" }}><strong>Add Collectibles Here!</strong></Card.Body>
         </Card>
     );
 };

@@ -12,16 +12,20 @@ const CollectiblePanel = ({ id, albumId, albumData }) => {
     }, [id])
 
     return (
-        <div style={{ "display": "flex", "width": "200px", "margin": "auto", "paddingTop": "20px" }}>
-            <BootCard style={{ "height": "240px", "width": "240px" }}>
+        
+        <div style={{ "width": "185px", "margin-left": "auto","margin-right": "75%", "padding-top": "10px" }}>
+           <strong style={{"fontSize": "20px"}}>Selected Collectible</strong>
+            <BootCard className="shadow" style={{ "height": "260px", "width": "180px" }}>
                 <CollectibleImage id={id} />
-                <BootCard.Title style={{ "fontSize": "16px", "margin-top": 0 }} >{collectible.collectible_name}</BootCard.Title>
-                <BootCard.Body style={{ "fontSize": "16px", "padding": 0 }}>
-                    Year: {collectible.year_created}
+                <BootCard.Title style={{ "fontSize": "20px", "margin-top": -12 }} >{collectible.collectible_name}</BootCard.Title>
+                <BootCard.Body style={{ "fontSize": "16px", "margin-top": -5, "padding": 0 }}>
+                    <strong>Year:</strong> {collectible.year_created}
                     <br></br>
-                    Manufacturer: {collectible.manufacturer}
+                    <strong>Manufacturer:</strong> {collectible.manufacturer}
                     <br></br>
-                    Grade: {collectible.graded}
+                    <strong>Condition: </strong>{collectible.c_condition}
+                    <br></br>
+                    {collectible.graded}
                 </BootCard.Body>
             </BootCard>
         </div>

@@ -21,12 +21,13 @@ const AlbumEditor = ({ albumData, id, handleRemoveAlbum }) => {
 
     return (
         <>
-            <p>SELECTED COLLECTION</p>
-            <div style={{ "width": "160px", "margin": "auto", "paddingTop": "0px" }}>
-                <BootCard className="shadow" style={{ "height": "240px" }}>
+            <div></div>
+            <div style={{ "width": "180px", "margin-left": "75%","margin-right": "auto", "padding-top": "10px"}}>
+            <strong style={{"fontSize": "20px"}}>Selected Collection</strong>
+                <BootCard className="shadow" style={{ "height": "260px" }}>
                     <AlbumImage id={id} />
-                    <BootCard.Title style={{ "fontSize": "16px" }}>{album.album_name}</BootCard.Title>
-                    <BootCard.Body className='type' style={{ "fontSize": "16px", "padding": "10px" }}>{album.collect_type}</BootCard.Body>
+                    <BootCard.Title style={{ "fontSize": "24px" }}><strong>{album.album_name}</strong></BootCard.Title>
+                    <BootCard.Body className='type' style={{ "fontSize": "18px", "padding": "0px" }}><strong>Collection Type:</strong><br></br>{album.collect_type}</BootCard.Body>
                 </BootCard>
                 <div style={{ "display": "flex", "justifyContent": "center" }}>
                     {/**remove album is inside of HomePage.jsx */}
