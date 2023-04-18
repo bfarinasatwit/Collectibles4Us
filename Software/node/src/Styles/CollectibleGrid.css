@@ -1,7 +1,7 @@
 .collectible-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    min-height: 300px;
+    min-height: 235px;
     margin-top: 25px;
     margin-bottom: 25px;
     justify-items: center;
